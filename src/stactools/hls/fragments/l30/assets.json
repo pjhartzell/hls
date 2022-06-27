@@ -1,0 +1,234 @@
+{
+    "B01": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "name": "B01",
+                "common_name": "coastal",
+                "center_wavelength": 0.44,
+                "full_width_half_max": 0.02
+            }
+        ],
+        "title": "Band 1: Coastal/Aerosol (0.43-0.45 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "B02": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "name": "B0s",
+                "common_name": "blue",
+                "center_wavelength": 0.48,
+                "full_width_half_max": 0.06
+            }
+        ],
+        "title": "Band 2: Blue (0.46-0.51 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "B03": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "name": "B03",
+                "common_name": "green",
+                "center_wavelength": 0.56,
+                "full_width_half_max": 0.06
+            }
+        ],
+        "title": "Band 3: Green (0.53-0.59 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "B04": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "name": "B04",
+                "common_name": "red",
+                "center_wavelength": 0.655,
+                "full_width_half_max": 0.03
+            }
+        ],
+        "title": "Band 4: Red (0.64-0.67 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "B05": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "name": "B05",
+                "common_name": "nir",
+                "center_wavelength": 0.865,
+                "full_width_half_max": 0.03
+            }
+        ],
+        "title": "Band 5: NIR (0.85-0.88 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "B06": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "name": "B06",
+                "common_name": "swir16",
+                "center_wavelength": 1.61,
+                "full_width_half_max": 0.08
+            }
+        ],
+        "title": "Band 6: SWIR16 (1.57-1.65 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "B07": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "name": "B07",
+                "common_name": "swir22",
+                "center_wavelength": 2.2,
+                "full_width_half_max": 0.18
+            }
+        ],
+        "title": "Band 7: SWIR22 (2.11-2.29 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "B09": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "name": "B09",
+                "common_name": "cirrus",
+                "center_wavelength": 1.37,
+                "full_width_half_max": 0.02
+            }
+        ],
+        "title": "Band 9: Cirrus 9 (1.36-1.38 micrometer) Top of Atmosphere Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "B10": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "unit": "degree Celsius",
+                "scale": 0.01,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "name": "B10",
+                "common_name": "lwir11",
+                "center_wavelength": 10.9,
+                "full_width_half_max": 0.6
+            }
+        ],
+        "title": "Band 10: LWIR11 (10.60-11.19 micrometer) Top of Atmosphere Brightness Temperature",
+        "roles": [
+            "data",
+            "temperature"
+        ]
+    },
+    "B11": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "unit": "degree Celsius",
+                "scale": 0.01,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "name": "B11",
+                "common_name": "lwir12",
+                "center_wavelength": 12.0,
+                "full_width_half_max": 1.0
+            }
+        ],
+        "title": "Band 11: LWIR12 (11.50-12.51 micrometer) Top of Atmosphere Brightness Temperature",
+        "roles": [
+            "data",
+            "temperature"
+        ]
+    }
+}

@@ -18,25 +18,6 @@ def create_hls_command(cli: Group) -> Command:
     def hls() -> None:
         pass
 
-    @hls.command(
-        "create-collection",
-        short_help="Creates a STAC collection",
-    )
-    @click.argument("destination")
-    def create_collection_command(destination: str) -> None:
-        """Creates a STAC Collection
-
-        Args:
-            destination (str): An HREF for the Collection JSON
-        """
-        collection = stac.create_collection()
-
-        collection.set_self_href(destination)
-
-        collection.save_object()
-
-        return None
-
     @hls.command("create-item", short_help="Create a STAC item")
     @click.argument("source")
     @click.argument("destination")
