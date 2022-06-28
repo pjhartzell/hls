@@ -230,5 +230,180 @@
             "data",
             "temperature"
         ]
+    },
+    "Fmask": {
+        "raster:bands": [
+            {
+                "data_type": "uint8",
+                "nodata": 255,
+                "unit": "bit field",
+                "spatial_resolution": 30
+            }
+        ],
+        "classification:bitfields": [
+            {
+                "name": "cloud",
+                "offset": 1,
+                "length": 1,
+                "classes": [
+                    {
+                        "description": "No",
+                        "value": 0
+                    },
+                    {
+                        "description": "Yes",
+                        "value": 1
+                    }
+                ]
+            },
+            {
+                "name": "adjacent",
+                "description": "Adjacent to cloud/shadow",
+                "offset": 2,
+                "length": 1,
+                "classes": [
+                    {
+                        "description": "No",
+                        "value": 0
+                    },
+                    {
+                        "description": "Yes",
+                        "value": 1
+                    }
+                ]
+            },
+            {
+                "name": "cloud_shadow",
+                "offset": 3,
+                "length": 1,
+                "classes": [
+                    {
+                        "description": "No",
+                        "value": 0
+                    },
+                    {
+                        "description": "Yes",
+                        "value": 1
+                    }
+                ]
+            },
+            {
+                "name": "snow_ice",
+                "offset": 4,
+                "length": 1,
+                "classes": [
+                    {
+                        "description": "No",
+                        "value": 0
+                    },
+                    {
+                        "description": "Yes",
+                        "value": 1
+                    }
+                ]
+            },
+            {
+                "name": "water",
+                "offset": 5,
+                "length": 1,
+                "classes": [
+                    {
+                        "description": "No",
+                        "value": 0
+                    },
+                    {
+                        "description": "Yes",
+                        "value": 1
+                    }
+                ]
+            },
+            {
+                "name": "aerosol_level",
+                "offset": 6,
+                "length": 2,
+                "classes": [
+                    {
+                        "description": "Climatology",
+                        "value": 0
+                    },
+                    {
+                        "description": "Low",
+                        "value": 1
+                    },
+                    {
+                        "description": "Moderate",
+                        "value": 2
+                    },
+                    {
+                        "description": "High",
+                        "value": 3
+                    }
+                ]
+            }
+        ],
+        "title": "Fmask: Quality Assessment Generated from the Function of Mask (Fmask) Algorithm",
+        "roles": [
+            "data"
+        ]
+    },
+    "SAA": {
+        "raster:bands": [
+            {
+                "data_type": "uint16",
+                "nodata": 40000,
+                "unit": "degree",
+                "scale": 0.01,
+                "spatial_resolution": 30
+            }
+        ],
+        "title": "SAA: Sun Azimuth Angle",
+        "roles": [
+            "data"
+        ]
+    },
+    "SZA": {
+        "raster:bands": [
+            {
+                "data_type": "uint16",
+                "nodata": 40000,
+                "unit": "degree",
+                "scale": 0.01,
+                "spatial_resolution": 30
+            }
+        ],
+        "title": "SZA: Sun Zenith Angle",
+        "roles": [
+            "data"
+        ]
+    },
+    "VAA": {
+        "raster:bands": [
+            {
+                "data_type": "uint16",
+                "nodata": 40000,
+                "unit": "degree",
+                "scale": 0.01,
+                "spatial_resolution": 30
+            }
+        ],
+        "title": "VAA: View Azimuth Angle",
+        "roles": [
+            "data"
+        ]
+    },
+    "VZA": {
+        "raster:bands": [
+            {
+                "data_type": "uint16",
+                "nodata": 40000,
+                "unit": "degree",
+                "scale": 0.01,
+                "spatial_resolution": 30
+            }
+        ],
+        "title": "VZA: View Zenith Angle",
+        "roles": [
+            "data"
+        ]
     }
 }

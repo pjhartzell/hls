@@ -1,20 +1,19 @@
 import logging
 import os
-from audioop import add
 from datetime import datetime, timezone
 from typing import Optional
 
+import shapely.geometry
 from pystac import Asset, Item
 from pystac.extensions.eo import EOExtension
 from pystac.extensions.projection import ProjectionExtension
+from pystac.extensions.raster import RasterExtension
 from pystac.extensions.view import ViewExtension
-from stactools.core.io import ReadHrefModifier
-from stactools.core.utils.antimeridian import Strategy
-
-from pystac.extensions.
-import shapely.geometry
 from pystac.utils import make_absolute_href
+from stactools.core.io import ReadHrefModifier
+from stactools.core.utils.antimeridian import Strategy, fix_item
 
+from stactools.hls.constants import CLASSIFICATION_EXTENSION_HREF, MGRS_EXTENSION_HREF
 from stactools.hls.fragments import STACFragments
 from stactools.hls.metadata import Metadata
 from stactools.hls.utils import create_cog_hrefs
@@ -48,6 +47,7 @@ def create_item(
     if metadata.start_end_datetime:
         item.properties.update(**metadata.start_end_datetime)
     item.common_metadata.created = datetime.now(tz=timezone.utc)
+
     item.common_metadata.platform = metadata.platform
     item.common_metadata.instruments = metadata.instrument
 
@@ -70,16 +70,18 @@ def create_item(
     view.azimuth = metadata.azimuth
     view.sun_azimuth = metadata.sun_azimuth
 
-    mgrs = 
+    proj = ProjectionExtension.ext(item, add_if_missing=True)
+    proj.epsg = metadata.epsg
+    proj.shape = metadata.shape
+    proj.transform = metadata.transform
 
-    # add extensions
-    # MGRS extension
-    # eo extension
-    # proj extension
+    item.stac_extensions.append(MGRS_EXTENSION_HREF)
+    item.properties.update(**metadata.mgrs)
 
-    import json
+    RasterExtension.add_to(item)
+    item.stac_extensions.append(CLASSIFICATION_EXTENSION_HREF)
 
-    print(json.dumps(item.to_dict(), indent=4))
+    fix_item(item, antimeridian_strategy)
 
     return item
 

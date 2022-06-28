@@ -1,8 +1,6 @@
 import os
-from typing import Any, Dict, List, Optional
+from typing import List, Optional
 
-from pystac.extensions.eo import EOExtension
-from pystac.extensions.raster import RasterExtension
 from stactools.core.io import ReadHrefModifier
 from stactools.core.utils import href_exists
 
@@ -32,36 +30,27 @@ def modify_href(
         return href
 
 
-def find_extensions(assets: Dict[str, Any]) -> List[str]:
-    """Adds extensions to the Item extension list if they exist on the Item assets.
-
-    NOTE: This package does not nest the classification extension inside
-    'raster:bands', so we do not check for its existence there.
-
-    Args:
-        item (Item): The Item being modified
-
-    Returns:
-        List[str]: List of stac extension URIs
-    """
-    extensions = set()
-    for asset in assets.values():
-        if "classification:classes" in asset or "classification:bitfields" in asset:
-            extensions.add(constants.CLASSIFICATION_EXTENSION_HREF)
-        if "eo:bands" in asset:
-            extensions.add(EOExtension.get_schema_uri())
-        if "raster:bands" in asset:
-            extensions.add(RasterExtension.get_schema_uri())
-
-    return list(extensions)
-
-
 def create_cog_hrefs(
     href: str,
     product: str,
     check_existence: bool,
     read_href_modifier: Optional[ReadHrefModifier] = None,
 ) -> List[str]:
+    """Creates a list of all COG hrefs for a granule from a single COG href and
+    optionally checks that all created hrefs exist.
+
+    Args:
+        href (str): A COG href belonging to an HLS granule.
+        product (str): The HLS product, either 'L30' or 'S30'.
+        check_existence (bool): If True, checks that each created COG href
+            exists.
+        read_href_modifier (Optional[ReadHrefModifier], optional): An optional
+            function to modify the href (e.g. to add a token to a url) for use
+            in checking href existence.
+
+    Returns:
+        List[str]: List of granule COG hrefs.
+    """
     base_href, filename = os.path.split(href)
     base_filename = ".".join(filename.split(".")[:-2])
 

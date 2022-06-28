@@ -1,0 +1,521 @@
+{
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "id": "HLS.L30.T19LDD.2022165T144027.v2.0",
+  "properties": {
+    "start_datetime": "2022-06-14T14:40:27.710686Z",
+    "end_datetime": "2022-06-14T14:40:51.652532Z",
+    "created": "2022-06-28T22:22:59.551700Z",
+    "platform": "landsat-9",
+    "instruments": [
+      "oli, tiirs"
+    ],
+    "eo:cloud_cover": 73,
+    "view:azimuth": 175.478337238966,
+    "view:sun_azimuth": 37.4140983639312,
+    "proj:epsg": 32619,
+    "proj:shape": [
+      3660,
+      3660
+    ],
+    "proj:transform": [
+      30.0,
+      0.0,
+      399960.0,
+      0.0,
+      -30.0,
+      -1599960.0
+    ],
+    "mgrs:utm_zone": 19,
+    "mgrs:latitude_band": "L",
+    "mgrs:grid_square": "DD",
+    "datetime": "2022-06-14T14:40:27.710686Z"
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -68.9090160446949,
+          -15.46499836257674
+        ],
+        [
+          -68.90943393560057,
+          -14.472270201287717
+        ],
+        [
+          -69.92825918556338,
+          -14.470456590104222
+        ],
+        [
+          -69.93254162161375,
+          -15.463054522872618
+        ],
+        [
+          -68.9090160446949,
+          -15.46499836257674
+        ]
+      ]
+    ]
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "/Users/pjh/dev/hls/examples/L30/HLS.L30.T19LDD.2022165T144027.v2.0.json",
+      "type": "application/json"
+    }
+  ],
+  "assets": {
+    "B01": {
+      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B01.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Band 1: Coastal/Aerosol (0.43-0.45 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+      "raster:bands": [
+        {
+          "data_type": "int16",
+          "nodata": -9999,
+          "scale": 0.0001,
+          "spatial_resolution": 30
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "B01",
+          "common_name": "coastal",
+          "center_wavelength": 0.44,
+          "full_width_half_max": 0.02
+        }
+      ],
+      "roles": [
+        "data",
+        "reflectance"
+      ]
+    },
+    "B02": {
+      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B02.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Band 2: Blue (0.46-0.51 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+      "raster:bands": [
+        {
+          "data_type": "int16",
+          "nodata": -9999,
+          "scale": 0.0001,
+          "spatial_resolution": 30
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "B0s",
+          "common_name": "blue",
+          "center_wavelength": 0.48,
+          "full_width_half_max": 0.06
+        }
+      ],
+      "roles": [
+        "data",
+        "reflectance"
+      ]
+    },
+    "B03": {
+      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B03.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Band 3: Green (0.53-0.59 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+      "raster:bands": [
+        {
+          "data_type": "int16",
+          "nodata": -9999,
+          "scale": 0.0001,
+          "spatial_resolution": 30
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "B03",
+          "common_name": "green",
+          "center_wavelength": 0.56,
+          "full_width_half_max": 0.06
+        }
+      ],
+      "roles": [
+        "data",
+        "reflectance"
+      ]
+    },
+    "B04": {
+      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B04.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Band 4: Red (0.64-0.67 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+      "raster:bands": [
+        {
+          "data_type": "int16",
+          "nodata": -9999,
+          "scale": 0.0001,
+          "spatial_resolution": 30
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "B04",
+          "common_name": "red",
+          "center_wavelength": 0.655,
+          "full_width_half_max": 0.03
+        }
+      ],
+      "roles": [
+        "data",
+        "reflectance"
+      ]
+    },
+    "B05": {
+      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B05.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Band 5: NIR (0.85-0.88 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+      "raster:bands": [
+        {
+          "data_type": "int16",
+          "nodata": -9999,
+          "scale": 0.0001,
+          "spatial_resolution": 30
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "B05",
+          "common_name": "nir",
+          "center_wavelength": 0.865,
+          "full_width_half_max": 0.03
+        }
+      ],
+      "roles": [
+        "data",
+        "reflectance"
+      ]
+    },
+    "B06": {
+      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B06.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Band 6: SWIR16 (1.57-1.65 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+      "raster:bands": [
+        {
+          "data_type": "int16",
+          "nodata": -9999,
+          "scale": 0.0001,
+          "spatial_resolution": 30
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "B06",
+          "common_name": "swir16",
+          "center_wavelength": 1.61,
+          "full_width_half_max": 0.08
+        }
+      ],
+      "roles": [
+        "data",
+        "reflectance"
+      ]
+    },
+    "B07": {
+      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B07.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Band 7: SWIR22 (2.11-2.29 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+      "raster:bands": [
+        {
+          "data_type": "int16",
+          "nodata": -9999,
+          "scale": 0.0001,
+          "spatial_resolution": 30
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "B07",
+          "common_name": "swir22",
+          "center_wavelength": 2.2,
+          "full_width_half_max": 0.18
+        }
+      ],
+      "roles": [
+        "data",
+        "reflectance"
+      ]
+    },
+    "B09": {
+      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B09.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Band 9: Cirrus 9 (1.36-1.38 micrometer) Top of Atmosphere Reflectance",
+      "raster:bands": [
+        {
+          "data_type": "int16",
+          "nodata": -9999,
+          "scale": 0.0001,
+          "spatial_resolution": 30
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "B09",
+          "common_name": "cirrus",
+          "center_wavelength": 1.37,
+          "full_width_half_max": 0.02
+        }
+      ],
+      "roles": [
+        "data",
+        "reflectance"
+      ]
+    },
+    "B10": {
+      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B10.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Band 10: LWIR11 (10.60-11.19 micrometer) Top of Atmosphere Brightness Temperature",
+      "raster:bands": [
+        {
+          "data_type": "int16",
+          "nodata": -9999,
+          "unit": "degree Celsius",
+          "scale": 0.01,
+          "spatial_resolution": 30
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "B10",
+          "common_name": "lwir11",
+          "center_wavelength": 10.9,
+          "full_width_half_max": 0.6
+        }
+      ],
+      "roles": [
+        "data",
+        "temperature"
+      ]
+    },
+    "B11": {
+      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B11.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Band 11: LWIR12 (11.50-12.51 micrometer) Top of Atmosphere Brightness Temperature",
+      "raster:bands": [
+        {
+          "data_type": "int16",
+          "nodata": -9999,
+          "unit": "degree Celsius",
+          "scale": 0.01,
+          "spatial_resolution": 30
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "B11",
+          "common_name": "lwir12",
+          "center_wavelength": 12.0,
+          "full_width_half_max": 1.0
+        }
+      ],
+      "roles": [
+        "data",
+        "temperature"
+      ]
+    },
+    "Fmask": {
+      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.Fmask.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Fmask: Quality Assessment Generated from the Function of Mask (Fmask) Algorithm",
+      "raster:bands": [
+        {
+          "data_type": "uint8",
+          "nodata": 255,
+          "unit": "bit field",
+          "spatial_resolution": 30
+        }
+      ],
+      "classification:bitfields": [
+        {
+          "name": "cloud",
+          "offset": 1,
+          "length": 1,
+          "classes": [
+            {
+              "description": "No",
+              "value": 0
+            },
+            {
+              "description": "Yes",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "name": "adjacent",
+          "description": "Adjacent to cloud/shadow",
+          "offset": 2,
+          "length": 1,
+          "classes": [
+            {
+              "description": "No",
+              "value": 0
+            },
+            {
+              "description": "Yes",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "name": "cloud_shadow",
+          "offset": 3,
+          "length": 1,
+          "classes": [
+            {
+              "description": "No",
+              "value": 0
+            },
+            {
+              "description": "Yes",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "name": "snow_ice",
+          "offset": 4,
+          "length": 1,
+          "classes": [
+            {
+              "description": "No",
+              "value": 0
+            },
+            {
+              "description": "Yes",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "name": "water",
+          "offset": 5,
+          "length": 1,
+          "classes": [
+            {
+              "description": "No",
+              "value": 0
+            },
+            {
+              "description": "Yes",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "name": "aerosol_level",
+          "offset": 6,
+          "length": 2,
+          "classes": [
+            {
+              "description": "Climatology",
+              "value": 0
+            },
+            {
+              "description": "Low",
+              "value": 1
+            },
+            {
+              "description": "Moderate",
+              "value": 2
+            },
+            {
+              "description": "High",
+              "value": 3
+            }
+          ]
+        }
+      ],
+      "roles": [
+        "data"
+      ]
+    },
+    "SAA": {
+      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.SAA.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "SAA: Sun Azimuth Angle",
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "nodata": 40000,
+          "unit": "degree",
+          "scale": 0.01,
+          "spatial_resolution": 30
+        }
+      ],
+      "roles": [
+        "data"
+      ]
+    },
+    "SZA": {
+      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.SZA.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "SZA: Sun Zenith Angle",
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "nodata": 40000,
+          "unit": "degree",
+          "scale": 0.01,
+          "spatial_resolution": 30
+        }
+      ],
+      "roles": [
+        "data"
+      ]
+    },
+    "VAA": {
+      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.VAA.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "VAA: View Azimuth Angle",
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "nodata": 40000,
+          "unit": "degree",
+          "scale": 0.01,
+          "spatial_resolution": 30
+        }
+      ],
+      "roles": [
+        "data"
+      ]
+    },
+    "VZA": {
+      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.VZA.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "VZA: View Zenith Angle",
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "nodata": 40000,
+          "unit": "degree",
+          "scale": 0.01,
+          "spatial_resolution": 30
+        }
+      ],
+      "roles": [
+        "data"
+      ]
+    }
+  },
+  "bbox": [
+    -69.93254162161375,
+    -15.46499836257674,
+    -68.9090160446949,
+    -14.470456590104222
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/mgrs/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/classification/v1.0.0/schema.json"
+  ]
+}
