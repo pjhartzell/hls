@@ -57,6 +57,8 @@ def create_cog_hrefs(
     cog_hrefs = []
     for asset_key in constants.ASSET_KEYS[product]:
         cog_hrefs.append(f"{base_href}/{base_filename}.{asset_key}.tif")
+    for common_asset_key in constants.ASSET_KEYS["common"]:
+        cog_hrefs.append(f"{base_href}/{base_filename}.{common_asset_key}.tif")
 
     if check_existence:
         for cog_href in cog_hrefs:
@@ -65,3 +67,33 @@ def create_cog_hrefs(
                 raise ValueError(f"File not found: {cog_href}")
 
     return cog_hrefs
+
+
+def filename_parts(href: str) -> List[str]:
+    """Split the filename from an HLS COG file HREF."""
+    return os.path.splitext(os.path.basename(href))[0].split(".")
+
+
+def id_from_href(href: str) -> str:
+    """Extract the HLS granule id from an HLS COG file HREF."""
+    return ".".join(filename_parts(href)[:-1])
+
+
+def product_from_href(href: str) -> str:
+    """Extract the HLS product (L30 or S30) from an HLS COG file HREF."""
+    return filename_parts(href)[1]
+
+
+def tile_id_from_href(href: str) -> str:
+    """Extract the HLS tile ID from an HLS COG file HREF."""
+    return filename_parts(href)[2]
+
+
+def version_from_href(href: str) -> str:
+    """Extract the HLS version from an HLS COG file HREF."""
+    return ".".join(filename_parts(href)[4:6])
+
+
+def asset_key_from_href(href: str) -> str:
+    """Extract the asset (i.e., band) from an HLS COG file HREF."""
+    return filename_parts(href)[-1]

@@ -3,7 +3,7 @@
   "stac_version": "1.0.0",
   "id": "HLS.S30.T19LDD.2022166T144741.v2.0",
   "properties": {
-    "created": "2022-06-28T22:22:08.999279Z",
+    "created": "2022-06-29T23:21:19.665461Z",
     "platform": "sentinel-2a",
     "instruments": [
       "msi"

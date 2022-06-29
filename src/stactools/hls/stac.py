@@ -15,7 +15,7 @@ from stactools.core.utils.antimeridian import Strategy, fix_item
 
 from stactools.hls.constants import CLASSIFICATION_EXTENSION_HREF, MGRS_EXTENSION_HREF
 from stactools.hls.fragments import STACFragments
-from stactools.hls.metadata import Metadata
+from stactools.hls.metadata import hls_metadata
 from stactools.hls.utils import create_cog_hrefs
 
 logger = logging.getLogger(__name__)
@@ -28,12 +28,7 @@ def create_item(
     antimeridian_strategy: Strategy = Strategy.SPLIT,
     geometry_tolerance: Optional[float] = None,
 ) -> Item:
-
-    metadata = Metadata.from_cog(
-        cog_href,
-        read_href_modifier,
-        geometry_tolerance,
-    )
+    metadata = hls_metadata(cog_href, read_href_modifier, geometry_tolerance)
     fragments = STACFragments(metadata.product)
 
     item = Item(
@@ -84,8 +79,3 @@ def create_item(
     fix_item(item, antimeridian_strategy)
 
     return item
-
-
-# href = "/Users/pjh/dev/hls/tests/data-files/external/HLS.S30.T19LDD.2022166T144741.v2.0.B09.tif"
-href = "/Users/pjh/dev/hls/tests/data-files/external/HLS.L30.T19LDD.2022165T144027.v2.0.B09.tif"
-create_item(href)

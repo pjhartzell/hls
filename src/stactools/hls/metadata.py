@@ -1,4 +1,3 @@
-import os
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Dict, List, Optional
@@ -10,8 +9,13 @@ from shapely.geometry import box, mapping
 from stactools.core.io import ReadHrefModifier
 from stactools.core.projection import reproject_geom
 
-from stactools.hls import constants
-from stactools.hls.utils import modify_href
+from stactools.hls import constants, utils
+
+
+class IncorrectAssetHref(Exception):
+    """An HREF to a EO data band (not an Fmask, azimuth, or zenith band) COG is
+    required.
+    """
 
 
 @dataclass
@@ -56,7 +60,7 @@ class Metadata:
         Returns:
             Metadata: A Metadata dataclass
         """
-        read_h5_href = modify_href(cog_href, read_href_modifier)
+        read_h5_href = utils.modify_href(cog_href, read_href_modifier)
         with rasterio.open(read_h5_href) as dataset:
             transform = dataset.transform[0:6]
             shape = dataset.shape
@@ -78,11 +82,10 @@ class Metadata:
                 "end_datetime": datetime_to_str(max(sensing_time)),
             }
 
-        fileparts = os.path.splitext(os.path.basename(cog_href))[0].split(".")
-        id = ".".join(fileparts[:-1])
-        version = ".".join(fileparts[4:6])
-        product = fileparts[1]
-        tile_id = fileparts[2]
+        id = utils.id_from_href(cog_href)
+        version = utils.version_from_href(cog_href)
+        product = utils.product_from_href(cog_href)
+        tile_id = utils.tile_id_from_href(cog_href)
 
         # Not clear if data from multiple sentinel platforms can be used in a
         # single granule. It appears landsat-8 and landsat-9 data can be used
@@ -125,3 +128,19 @@ class Metadata:
             mgrs=mgrs,
             geometry=geometry,
         )
+
+
+def hls_metadata(
+    cog_href: str,
+    read_href_modifier: Optional[ReadHrefModifier] = None,
+    geometry_tolerance: Optional[float] = None,
+) -> Metadata:
+    product = utils.product_from_href(cog_href)
+    asset_key = utils.asset_key_from_href(cog_href)
+    if asset_key not in constants.ASSET_KEYS[product]:
+        raise IncorrectAssetHref(
+            f"A STAC Item can not be created from an Fmask, SAA, SZA, VAA, or "
+            f"VZA COG HREF. A '{asset_key}' COG HREF was supplied."
+        )
+
+    return Metadata.from_cog(cog_href, read_href_modifier, geometry_tolerance)

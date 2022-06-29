@@ -17,11 +17,6 @@ ASSET_KEYS = {
         "B09",
         "B10",
         "B11",
-        "Fmask",
-        "SAA",
-        "SZA",
-        "VAA",
-        "VZA",
     ],
     "S30": [
         "B01",
@@ -37,6 +32,8 @@ ASSET_KEYS = {
         "B10",
         "B11",
         "B12",
+    ],
+    "common": [
         "Fmask",
         "SAA",
         "SZA",

@@ -5,7 +5,7 @@
   "properties": {
     "start_datetime": "2022-06-14T14:40:27.710686Z",
     "end_datetime": "2022-06-14T14:40:51.652532Z",
-    "created": "2022-06-28T22:22:59.551700Z",
+    "created": "2022-06-29T23:20:36.190561Z",
     "platform": "landsat-9",
     "instruments": [
       "oli, tiirs"
