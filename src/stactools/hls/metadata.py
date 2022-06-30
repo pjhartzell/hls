@@ -136,11 +136,11 @@ def hls_metadata(
     geometry_tolerance: Optional[float] = None,
 ) -> Metadata:
     product = utils.product_from_href(cog_href)
-    asset_key = utils.asset_key_from_href(cog_href)
-    if asset_key not in constants.ASSET_KEYS[product]:
+    band_name = utils.band_name_from_href(cog_href)
+    if band_name not in constants.BANDS[product]:
         raise IncorrectAssetHref(
             f"A STAC Item can not be created from an Fmask, SAA, SZA, VAA, or "
-            f"VZA COG HREF. A '{asset_key}' COG HREF was supplied."
+            f"VZA COG HREF. A '{band_name}' COG HREF was supplied."
         )
 
     return Metadata.from_cog(cog_href, read_href_modifier, geometry_tolerance)

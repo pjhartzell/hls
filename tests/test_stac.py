@@ -10,8 +10,8 @@ def test_create_l30_item() -> None:
     item = stac.create_item(href, check_existence=True)
     assert item.id == "HLS.L30.T19LDD.2022165T144027.v2.0"
     asset_dict = item.assets
-    assert "Fmask" in asset_dict  # common asset
-    assert "B01" in asset_dict  # eo asset
+    assert "fmask" in asset_dict  # common asset
+    assert "thermal_infrared_1" in asset_dict  # eo asset specific to landsat
     item.validate()
 
 
@@ -20,8 +20,8 @@ def test_create_s30_item() -> None:
     item = stac.create_item(href, check_existence=True)
     assert item.id == "HLS.S30.T19LDD.2022166T144741.v2.0"
     asset_dict = item.assets
-    assert "Fmask" in asset_dict  # common asset
-    assert "B8A" in asset_dict  # eo asset
+    assert "fmask" in asset_dict  # common asset
+    assert "red_edge_1" in asset_dict  # eo asset specific to sentinel
     item.validate()
 
 

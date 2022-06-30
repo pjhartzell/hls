@@ -55,10 +55,10 @@ def create_cog_hrefs(
     base_filename = ".".join(filename.split(".")[:-2])
 
     cog_hrefs = []
-    for asset_key in constants.ASSET_KEYS[product]:
-        cog_hrefs.append(f"{base_href}/{base_filename}.{asset_key}.tif")
-    for common_asset_key in constants.ASSET_KEYS["common"]:
-        cog_hrefs.append(f"{base_href}/{base_filename}.{common_asset_key}.tif")
+    for band in constants.BANDS[product]:
+        cog_hrefs.append(f"{base_href}/{base_filename}.{band}.tif")
+    for common_band in constants.BANDS["common"]:
+        cog_hrefs.append(f"{base_href}/{base_filename}.{common_band}.tif")
 
     if check_existence:
         for cog_href in cog_hrefs:
@@ -94,6 +94,6 @@ def version_from_href(href: str) -> str:
     return ".".join(filename_parts(href)[4:6])
 
 
-def asset_key_from_href(href: str) -> str:
-    """Extract the asset (i.e., band) from an HLS COG file HREF."""
+def band_name_from_href(href: str) -> str:
+    """Extract the band name from an HLS COG file HREF."""
     return filename_parts(href)[-1]

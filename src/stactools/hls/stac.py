@@ -1,5 +1,4 @@
 import logging
-import os
 from datetime import datetime, timezone
 from typing import Optional
 
@@ -9,7 +8,6 @@ from pystac.extensions.eo import EOExtension
 from pystac.extensions.projection import ProjectionExtension
 from pystac.extensions.raster import RasterExtension
 from pystac.extensions.view import ViewExtension
-from pystac.utils import make_absolute_href
 from stactools.core.io import ReadHrefModifier
 from stactools.core.utils.antimeridian import Strategy, fix_item
 
@@ -29,7 +27,7 @@ def create_item(
     geometry_tolerance: Optional[float] = None,
 ) -> Item:
     metadata = hls_metadata(cog_href, read_href_modifier, geometry_tolerance)
-    fragments = STACFragments(metadata.product)
+    fragments = STACFragments()
 
     item = Item(
         id=metadata.id,
@@ -53,9 +51,7 @@ def create_item(
         read_href_modifier,
     )
     for href in cog_hrefs:
-        asset_key = os.path.basename(href).split(".")[-2]
-        asset_dict = fragments.asset_dict(asset_key)
-        asset_dict["href"] = make_absolute_href(href)
+        asset_key, asset_dict = fragments.asset(href)
         item.add_asset(asset_key, Asset.from_dict(asset_dict))
 
     eo = EOExtension.ext(item, add_if_missing=True)
