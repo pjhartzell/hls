@@ -5,7 +5,7 @@
   "properties": {
     "start_datetime": "2022-06-14T14:40:27.710686Z",
     "end_datetime": "2022-06-14T14:40:51.652532Z",
-    "created": "2022-06-29T23:20:36.190561Z",
+    "created": "2022-06-30T15:07:41.601817Z",
     "platform": "landsat-9",
     "instruments": [
       "oli, tiirs"
@@ -105,7 +105,7 @@
       ],
       "eo:bands": [
         {
-          "name": "B0s",
+          "name": "B02",
           "common_name": "blue",
           "center_wavelength": 0.48,
           "full_width_half_max": 0.06

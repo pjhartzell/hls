@@ -33,7 +33,7 @@
         ],
         "eo:bands": [
             {
-                "name": "B0s",
+                "name": "B02",
                 "common_name": "blue",
                 "center_wavelength": 0.48,
                 "full_width_half_max": 0.06
