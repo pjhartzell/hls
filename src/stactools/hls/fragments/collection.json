@@ -11,33 +11,38 @@
             "title": "LP DAAC - Data Citation and Policies"
         },
         {
-            "rel": "help",
-            "href": "https://lpdaac.usgs.gov/documents/1333/VNP09_User_Guide_V1.7.pdf",
+            "rel": "license",
+            "href": "https://sentinel.esa.int/documents/247904/690755/Sentinel_Data_Legal_Notice",
             "type": "application/pdf",
-            "title": "Suomi-NPP VIIRS Surface Reflectance User's Guide"
+            "title": "Copernicus Sentinel data terms"
         },
         {
-            "rel": "cite-as",
-            "href": "https://doi.org/10.5067/VIIRS/VNP09A1.001",
-            "type": "text/html",
-            "title": "LP DAAC - VNP09A1 v001"
+            "rel": "help",
+            "href": "https://lpdaac.usgs.gov/documents/1326/HLS_User_Guide_V2.pdf",
+            "type": "application/pdf",
+            "title": "Harmonized Landsat Sentinel-2 (HLS) Product User Guide"
         }
     ],
     "keywords": [
         "NASA",
-        "VIIRS",
+        "USGS",
+        "Landsat",
+        "ESA",
+        "Copernicus",
+        "Sentinel",
         "Satellite",
         "Imagery",
         "Global",
         "Reflectance",
-        "VNP09A1"
+        "Temperature"
     ],
     "providers": [
         {
             "name": "NASA LP DAAC at the USGS EROS Center",
             "roles": [
                 "producer",
-                "licensor"
+                "licensor",
+                "processor"
             ],
             "url": "https://lpdaac.usgs.gov/"
         }
@@ -56,12 +61,16 @@
         "temporal": {
             "interval": [
                 [
-                    "2012-01-17T00:00:00Z",
+                    "2013-04-11T00:00:00Z",
                     null
                 ]
             ]
         }
     },
-    "sci:doi": "10.5067/VIIRS/VNP09A1.001",
-    "sci:citation": "Vermote, E. 2020. VIIRS/NPP Surface Reflectance 8-Day L3 Global 1 km SIN Grid, Version 1. Land Processes Distributed Active Archive Center (LP DAAC), Sioux Falls, South Dakota USA."
+    "sci:publications": [
+        {
+            "doi": "10.1016/j.rse.2018.09.002",
+            "citation": "Claverie, M., Ju, J., Masek, J. G., Dungan, J. L., Vermote, E. F., Roger, J.-C., Skakun, S. V., & Justice, C. (2018). The Harmonized Landsat and Sentinel-2 surface reflectance data set. Remote Sensing of Environment, 219, 145-161."
+        }
+    ]
 }

@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict, Tuple
+from typing import Any, Dict, List, Tuple
 
 import pkg_resources
 from pystac import Extent, Link, MediaType, Provider
@@ -51,6 +51,13 @@ class STACFragments:
         ]
         collection["links"] = [Link.from_dict(link) for link in collection["links"]]
         return collection
+
+    def collection_eo_bands_summary(self) -> List[Dict[str, Any]]:
+        summary = []
+        for asset in self.assets.values():
+            if "eo:bands" in asset:
+                summary.append(asset["eo:bands"][0])
+        return summary
 
     def _load(self, file_name: str) -> Any:
         try:

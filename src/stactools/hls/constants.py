@@ -1,9 +1,12 @@
+from typing import Any, Dict
+
 CLASSIFICATION_EXTENSION_HREF = (
     "https://stac-extensions.github.io/classification/v1.0.0/schema.json"
 )
 MGRS_EXTENSION_HREF = "https://stac-extensions.github.io/mgrs/v1.0.0/schema.json"
 
-INSTRUMENT = {"L30": ["oli, tiirs"], "S30": ["msi"]}
+INSTRUMENT = {"L30": ["oli", "tiirs"], "S30": ["msi"]}
+PLATFORMS = ["landsat-8", "landsat-9", "sentinel-2a", "sentinel-2b"]
 
 BANDS = {
     "L30": {
@@ -39,5 +42,26 @@ BANDS = {
         "SZA": "sza",
         "VAA": "vaa",
         "VZA": "vza",
+    },
+}
+
+SCIENTIFIC: Dict[str, Any] = {
+    "L30": {
+        "doi": "10.5067/HLS/HLSL30.002",
+        "cite-as": {
+            "rel": "cite-as",
+            "target": "https://doi.org/10.5067/HLS/HLSL30.002",
+            "media_type": "text/html",
+            "title": "LP DAAC - HLSL30 v002",
+        },
+    },
+    "S30": {
+        "doi": "10.5067/HLS/HLSS30.002",
+        "cite-as": {
+            "rel": "cite-as",
+            "target": "https://doi.org/10.5067/HLS/HLSS30.002",
+            "media_type": "text/html",
+            "title": "LP DAAC - HLSS30 v002",
+        },
     },
 }

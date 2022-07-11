@@ -54,3 +54,11 @@ def test_antimeridian_split() -> None:
     item_dict = item.to_dict()
     assert len(item_dict["geometry"]["coordinates"]) == 2
     item.validate()
+
+
+def test_create_collection() -> None:
+    collection = stac.create_collection()
+    assert collection.id == "hls"
+    collection_dict = collection.to_dict()
+    assert "eo:bands" in collection_dict["summaries"]
+    assert len(collection_dict["item_assets"]) == 20

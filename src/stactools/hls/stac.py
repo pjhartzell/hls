@@ -1,17 +1,25 @@
 import logging
 from datetime import datetime, timezone
-from typing import Optional
+from typing import Any, Dict, Optional
 
 import shapely.geometry
-from pystac import Asset, Item
+from pystac import Asset, Collection, Item, Link, Summaries
 from pystac.extensions.eo import EOExtension
+from pystac.extensions.item_assets import AssetDefinition, ItemAssetsExtension
 from pystac.extensions.projection import ProjectionExtension
 from pystac.extensions.raster import RasterExtension
+from pystac.extensions.scientific import ScientificExtension
 from pystac.extensions.view import ViewExtension
 from stactools.core.io import ReadHrefModifier
 from stactools.core.utils.antimeridian import Strategy, fix_item
 
-from stactools.hls.constants import CLASSIFICATION_EXTENSION_HREF, MGRS_EXTENSION_HREF
+from stactools.hls.constants import (
+    CLASSIFICATION_EXTENSION_HREF,
+    INSTRUMENT,
+    MGRS_EXTENSION_HREF,
+    PLATFORMS,
+    SCIENTIFIC,
+)
 from stactools.hls.fragments import STACFragments
 from stactools.hls.metadata import hls_metadata
 from stactools.hls.utils import create_cog_hrefs
@@ -24,9 +32,8 @@ def create_item(
     read_href_modifier: Optional[ReadHrefModifier] = None,
     check_existence: bool = False,
     antimeridian_strategy: Strategy = Strategy.SPLIT,
-    geometry_tolerance: Optional[float] = None,
 ) -> Item:
-    metadata = hls_metadata(cog_href, read_href_modifier, geometry_tolerance)
+    metadata = hls_metadata(cog_href, read_href_modifier)
     fragments = STACFragments()
 
     item = Item(
@@ -34,15 +41,8 @@ def create_item(
         geometry=metadata.geometry,
         bbox=list(shapely.geometry.shape(metadata.geometry).bounds),
         datetime=metadata.acquisition_datetime,
-        properties={},
+        properties={"sci:doi": SCIENTIFIC[metadata.product]["doi"]},
     )
-
-    if metadata.start_end_datetime:
-        item.properties.update(**metadata.start_end_datetime)
-    item.common_metadata.created = datetime.now(tz=timezone.utc)
-
-    item.common_metadata.platform = metadata.platform
-    item.common_metadata.instruments = metadata.instrument
 
     cog_hrefs = create_cog_hrefs(
         cog_href,
@@ -53,6 +53,12 @@ def create_item(
     for href in cog_hrefs:
         asset_key, asset_dict = fragments.asset(href)
         item.add_asset(asset_key, Asset.from_dict(asset_dict))
+
+    if metadata.start_end_datetime:
+        item.properties.update(**metadata.start_end_datetime)
+    item.common_metadata.created = datetime.now(tz=timezone.utc)
+    item.common_metadata.platform = metadata.platform
+    item.common_metadata.instruments = metadata.instrument
 
     eo = EOExtension.ext(item, add_if_missing=True)
     eo.cloud_cover = metadata.cloud_cover
@@ -70,8 +76,58 @@ def create_item(
     item.properties.update(**metadata.mgrs)
 
     RasterExtension.add_to(item)
+
+    ScientificExtension.add_to(item)
+    item.links.append(Link(**SCIENTIFIC[metadata.product]["cite-as"]))
+
     item.stac_extensions.append(CLASSIFICATION_EXTENSION_HREF)
 
     fix_item(item, antimeridian_strategy)
 
     return item
+
+
+def create_collection() -> Collection:
+    fragments = STACFragments()
+
+    summaries: Dict[str, Any] = {
+        "instruments": [val for values in INSTRUMENT.values() for val in values],
+        "platform": PLATFORMS,
+        "sci:doi": [value["doi"] for value in SCIENTIFIC.values()],
+        "eo:bands": fragments.collection_eo_bands_summary()
+        # GSD?
+    }
+
+    collection_fragments = fragments.collection_dict()
+    collection = Collection(
+        id=collection_fragments["id"],
+        title=collection_fragments["title"],
+        description=collection_fragments["description"],
+        license=collection_fragments["license"],
+        keywords=collection_fragments["keywords"],
+        providers=collection_fragments["providers"],
+        extent=collection_fragments["extent"],
+        summaries=Summaries(summaries),
+    )
+    collection.add_links(collection_fragments["links"])
+
+    item_assets_dict = fragments.assets
+    item_assets = {k: AssetDefinition(v) for k, v in item_assets_dict.items()}
+    item_assets_ext = ItemAssetsExtension.ext(collection, add_if_missing=True)
+    item_assets_ext.item_assets = item_assets
+
+    RasterExtension.add_to(collection)
+
+    EOExtension.add_to(collection)
+
+    ScientificExtension.add_to(collection)
+    collection.extra_fields["sci:publications"] = collection_fragments[
+        "sci:publications"
+    ]
+    collection.add_links([Link(**value["cite-as"]) for value in SCIENTIFIC.values()])
+
+    collection.stac_extensions.extend([CLASSIFICATION_EXTENSION_HREF])
+
+    collection.stac_extensions = sorted(collection.stac_extensions)
+
+    return collection

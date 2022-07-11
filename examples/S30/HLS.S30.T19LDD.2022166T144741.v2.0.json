@@ -3,7 +3,8 @@
   "stac_version": "1.0.0",
   "id": "HLS.S30.T19LDD.2022166T144741.v2.0",
   "properties": {
-    "created": "2022-06-30T22:42:25.984578Z",
+    "sci:doi": "10.5067/HLS/HLSS30.002",
+    "created": "2022-07-06T21:06:06.914554Z",
     "platform": "sentinel-2a",
     "instruments": [
       "msi"
@@ -58,9 +59,10 @@
   },
   "links": [
     {
-      "rel": "self",
-      "href": "/Users/pjh/dev/hls/examples/S30/HLS.S30.T19LDD.2022166T144741.v2.0.json",
-      "type": "application/json"
+      "rel": "cite-as",
+      "href": "https://doi.org/10.5067/HLS/HLSS30.002",
+      "type": "text/html",
+      "title": "LP DAAC - HLSS30 v002"
     }
   ],
   "assets": {
@@ -79,6 +81,7 @@
       "eo:bands": [
         {
           "common_name": "coastal",
+          "description": "Coastal aerosol",
           "center_wavelength": 0.44,
           "full_width_half_max": 0.02,
           "name": "B01"
@@ -104,6 +107,7 @@
       "eo:bands": [
         {
           "common_name": "blue",
+          "description": "Visible blue",
           "center_wavelength": 0.48,
           "full_width_half_max": 0.06,
           "name": "B02"
@@ -129,6 +133,7 @@
       "eo:bands": [
         {
           "common_name": "green",
+          "description": "Visible green",
           "center_wavelength": 0.56,
           "full_width_half_max": 0.06,
           "name": "B03"
@@ -154,6 +159,7 @@
       "eo:bands": [
         {
           "common_name": "red",
+          "description": "Visible red",
           "center_wavelength": 0.655,
           "full_width_half_max": 0.03,
           "name": "B04"
@@ -178,6 +184,7 @@
       ],
       "eo:bands": [
         {
+          "description": "Red-Edge 1",
           "center_wavelength": 0.7,
           "full_width_half_max": 0.02,
           "name": "B05"
@@ -202,6 +209,7 @@
       ],
       "eo:bands": [
         {
+          "description": "Red-Edge 2",
           "center_wavelength": 0.74,
           "full_width_half_max": 0.02,
           "name": "B06"
@@ -226,6 +234,7 @@
       ],
       "eo:bands": [
         {
+          "description": "Red-Edge 3",
           "center_wavelength": 0.78,
           "full_width_half_max": 0.02,
           "name": "B07"
@@ -251,6 +260,7 @@
       "eo:bands": [
         {
           "common_name": "nir",
+          "description": "NIR broad",
           "center_wavelength": 0.83,
           "full_width_half_max": 0.1,
           "name": "B08"
@@ -276,6 +286,7 @@
       "eo:bands": [
         {
           "common_name": "nir",
+          "description": "NIR narrow",
           "center_wavelength": 0.865,
           "full_width_half_max": 0.03,
           "name": "B8A"
@@ -301,6 +312,7 @@
       "eo:bands": [
         {
           "common_name": "swir16",
+          "description": "SWIR 1",
           "center_wavelength": 1.61,
           "full_width_half_max": 0.08,
           "name": "B09"
@@ -326,6 +338,7 @@
       "eo:bands": [
         {
           "common_name": "swir22",
+          "description": "SWIR 2",
           "center_wavelength": 2.2,
           "full_width_half_max": 0.18,
           "name": "B10"
@@ -350,6 +363,7 @@
       ],
       "eo:bands": [
         {
+          "description": "Water vapor",
           "center_wavelength": 0.94,
           "full_width_half_max": 0.02,
           "name": "B11"
@@ -375,6 +389,7 @@
       "eo:bands": [
         {
           "common_name": "cirrus",
+          "description": "Cirrus",
           "center_wavelength": 1.37,
           "full_width_half_max": 0.02,
           "name": "B12"
@@ -583,6 +598,7 @@
     "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/mgrs/v1.0.0/schema.json",
     "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
     "https://stac-extensions.github.io/classification/v1.0.0/schema.json"
   ]
 }

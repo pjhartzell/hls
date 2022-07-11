@@ -11,6 +11,7 @@
         "eo:bands": [
             {
                 "common_name": "coastal",
+                "description": "Coastal aerosol",
                 "center_wavelength": 0.44,
                 "full_width_half_max": 0.02
             }
@@ -33,6 +34,7 @@
         "eo:bands": [
             {
                 "common_name": "blue",
+                "description": "Visible blue",
                 "center_wavelength": 0.48,
                 "full_width_half_max": 0.06
             }
@@ -55,6 +57,7 @@
         "eo:bands": [
             {
                 "common_name": "green",
+                "description": "Visible green",
                 "center_wavelength": 0.56,
                 "full_width_half_max": 0.06
             }
@@ -77,6 +80,7 @@
         "eo:bands": [
             {
                 "common_name": "red",
+                "description": "Visible red",
                 "center_wavelength": 0.655,
                 "full_width_half_max": 0.03
             }
@@ -98,6 +102,7 @@
         ],
         "eo:bands": [
             {
+                "description": "Red-Edge 1",
                 "center_wavelength": 0.70,
                 "full_width_half_max": 0.02
             }
@@ -119,6 +124,7 @@
         ],
         "eo:bands": [
             {
+                "description": "Red-Edge 2",
                 "center_wavelength": 0.74,
                 "full_width_half_max": 0.02
             }
@@ -140,6 +146,7 @@
         ],
         "eo:bands": [
             {
+                "description": "Red-Edge 3",
                 "center_wavelength": 0.78,
                 "full_width_half_max": 0.02
             }
@@ -162,6 +169,7 @@
         "eo:bands": [
             {
                 "common_name": "nir",
+                "description": "NIR broad",
                 "center_wavelength": 0.83,
                 "full_width_half_max": 0.10
             }
@@ -184,6 +192,7 @@
         "eo:bands": [
             {
                 "common_name": "nir",
+                "description": "NIR narrow",
                 "center_wavelength": 0.865,
                 "full_width_half_max": 0.03
             }
@@ -206,6 +215,7 @@
         "eo:bands": [
             {
                 "common_name": "swir16",
+                "description": "SWIR 1",
                 "center_wavelength": 1.61,
                 "full_width_half_max": 0.08
             }
@@ -228,6 +238,7 @@
         "eo:bands": [
             {
                 "common_name": "swir22",
+                "description": "SWIR 2",
                 "center_wavelength": 2.2,
                 "full_width_half_max": 0.18
             }
@@ -249,6 +260,7 @@
         ],
         "eo:bands": [
             {
+                "description": "Water vapor",
                 "center_wavelength": 0.94,
                 "full_width_half_max": 0.02
             }
@@ -271,6 +283,7 @@
         "eo:bands": [
             {
                 "common_name": "cirrus",
+                "description": "Cirrus",
                 "center_wavelength": 1.37,
                 "full_width_half_max": 0.02
             }
@@ -294,6 +307,7 @@
         "eo:bands": [
             {
                 "common_name": "lwir11",
+                "description": "Thermal infrared 1",
                 "center_wavelength": 10.9,
                 "full_width_half_max": 0.6
             }
@@ -317,6 +331,7 @@
         "eo:bands": [
             {
                 "common_name": "lwir12",
+                "description": "Thermal infrared 2",
                 "center_wavelength": 12.0,
                 "full_width_half_max": 1.0
             }

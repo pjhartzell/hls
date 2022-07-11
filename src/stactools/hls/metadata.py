@@ -44,7 +44,6 @@ class Metadata:
         cls,
         cog_href: str,
         read_href_modifier: Optional[ReadHrefModifier] = None,
-        geometry_tolerance: Optional[float] = None,
     ) -> "Metadata":
         """Extracts granule metadata from a COG file.
 
@@ -53,9 +52,6 @@ class Metadata:
             read_href_modifier (Optional[ReadHrefModifier], optional): An
                 optional function to modify the href (e.g. to add a token to a
                 url)
-            geometry_tolerance (Optional[float], optional): The maximum
-                acceptable reprojection (from UTM to WGS84) error in the
-                geometry, specified in geographic degrees.
 
         Returns:
             Metadata: A Metadata dataclass
@@ -87,20 +83,15 @@ class Metadata:
         product = utils.product_from_href(cog_href)
         tile_id = utils.tile_id_from_href(cog_href)
 
-        # Not clear if data from multiple sentinel platforms can be used in a
-        # single granule. It appears landsat-8 and landsat-9 data can be used
-        # together in a single granule. See
-        # https://lpdaac.usgs.gov/news/hls-to-include-landsat-9-observations/
+        # Handles multiple platforms in a single granule; unknown if that actually occurs
+        platforms = set()
         if product == "S30":
-            if tags["DATASTRIP_ID"][2] == "A":
-                platform = "sentinel-2a"
-            else:
-                platform = "sentinel-2b"
+            for datastrip_id in tags["DATASTRIP_ID"].split(";"):
+                platforms.add(f"sentinel-2{datastrip_id.strip().lower()[2]}")
         else:
-            platforms = set()
             for product_id in tags["LANDSAT_PRODUCT_ID"].split(";"):
                 platforms.add(f"landsat-{product_id.strip()[3]}")
-            platform = ", ".join(platforms)
+        platform = ", ".join(platforms)
 
         mgrs = {
             "mgrs:utm_zone": int(tile_id[1:3]),
@@ -133,7 +124,6 @@ class Metadata:
 def hls_metadata(
     cog_href: str,
     read_href_modifier: Optional[ReadHrefModifier] = None,
-    geometry_tolerance: Optional[float] = None,
 ) -> Metadata:
     product = utils.product_from_href(cog_href)
     band_name = utils.band_name_from_href(cog_href)
@@ -143,4 +133,4 @@ def hls_metadata(
             f"VZA COG HREF. A '{band_name}' COG HREF was supplied."
         )
 
-    return Metadata.from_cog(cog_href, read_href_modifier, geometry_tolerance)
+    return Metadata.from_cog(cog_href, read_href_modifier)
