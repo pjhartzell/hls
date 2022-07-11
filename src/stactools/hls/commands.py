@@ -4,6 +4,7 @@ import os
 import click
 from click import Command, Group
 from pystac import CatalogType
+from pystac.utils import make_absolute_href
 from stactools.core.utils.antimeridian import Strategy
 
 from stactools.hls import stac
@@ -16,7 +17,7 @@ def create_hls_command(cli: Group) -> Command:
 
     @cli.group(
         "hls",
-        short_help=("Commands for working with stactools-hls"),
+        short_help=("Commands for creating HLS STAC"),
     )
     def hls() -> None:
         pass
@@ -76,6 +77,13 @@ def create_hls_command(cli: Group) -> Command:
     @click.argument("INFILE")
     @click.argument("OUTDIR")
     @click.option(
+        "-c",
+        "--check-existence",
+        is_flag=True,
+        default=False,
+        help="Check that all granule asset COGs exist",
+    )
+    @click.option(
         "-a",
         "--antimeridian-strategy",
         type=click.Choice(["normalize", "split"], case_sensitive=False),
@@ -84,7 +92,7 @@ def create_hls_command(cli: Group) -> Command:
         help="Geometry strategy for antimeridian scenes",
     )
     def create_collection_command(
-        infile: str, outdir: str, antimeridian_strategy: str
+        infile: str, outdir: str, check_existence: bool, antimeridian_strategy: str
     ) -> None:
         """Creates a STAC Collection with Items created from granule asset HREFs
         listed in INFILE. Only one asset HREF for each granule should be listed.
@@ -95,6 +103,8 @@ def create_hls_command(cli: Group) -> Command:
                 should point to a single HLS or L30 granule COG file. Do not
                 list multiple COG file HREFs for the same granule.
             outdir (str): Directory that will contain the collection.
+            check_existence (bool): Flag to check that COGs exist for all
+                granule assets for each Item. Default is False.
             antimeridian_strategy (str, optional): Choice of 'normalize' or
                 'split' to either split the Item geometry on -180 longitude or
                 normalize the Item geometry so all longitudes are either
@@ -103,16 +113,20 @@ def create_hls_command(cli: Group) -> Command:
         strategy = Strategy[antimeridian_strategy.upper()]
 
         with open(infile) as f:
-            hrefs = [os.path.abspath(line.strip()) for line in f.readlines()]
+            hrefs = [make_absolute_href(line.strip()) for line in f.readlines()]
 
         collection = stac.create_collection()
+        collection.set_self_href(os.path.join(outdir, "collection.json"))
 
         for href in hrefs:
-            item = stac.create_item(href, antimeridian_strategy=strategy)
+            item = stac.create_item(
+                href, check_existence=check_existence, antimeridian_strategy=strategy
+            )
             collection.add_item(item)
+        collection.update_extent_from_items()
 
-        collection.set_self_href(os.path.join(outdir, "collection.json"))
         collection.catalog_type = CatalogType.SELF_CONTAINED
+        collection.make_all_asset_hrefs_relative
         collection.validate_all()
         collection.save()
 

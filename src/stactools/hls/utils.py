@@ -70,30 +70,30 @@ def create_cog_hrefs(
 
 
 def filename_parts(href: str) -> List[str]:
-    """Split the filename from an HLS COG file HREF."""
+    """Splits the filename from an HLS COG file HREF into a list of its parts."""
     return os.path.splitext(os.path.basename(href))[0].split(".")
 
 
 def id_from_href(href: str) -> str:
-    """Extract the HLS granule id from an HLS COG file HREF."""
+    """Extracts the HLS granule id from an HLS COG file HREF."""
     return ".".join(filename_parts(href)[:-1])
 
 
 def product_from_href(href: str) -> str:
-    """Extract the HLS product (L30 or S30) from an HLS COG file HREF."""
+    """Extracts the HLS product (L30 or S30) from an HLS COG file HREF."""
     return filename_parts(href)[1]
 
 
 def tile_id_from_href(href: str) -> str:
-    """Extract the HLS tile ID from an HLS COG file HREF."""
+    """Extracts the HLS tile ID from an HLS COG file HREF."""
     return filename_parts(href)[2]
 
 
 def version_from_href(href: str) -> str:
-    """Extract the HLS version from an HLS COG file HREF."""
+    """Extracts the HLS version from an HLS COG file HREF."""
     return ".".join(filename_parts(href)[4:6])
 
 
 def band_name_from_href(href: str) -> str:
-    """Extract the band name from an HLS COG file HREF."""
+    """Extracts the band name from an HLS COG file HREF."""
     return filename_parts(href)[-1]

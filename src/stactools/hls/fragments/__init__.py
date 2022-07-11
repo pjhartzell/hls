@@ -24,7 +24,7 @@ class STACFragments:
             href (str): HREF to an asset COG file
 
         Returns:
-            Dict[str, Any]: Asset dictionary
+            Tuple[str, Dict[str, Any]]: Asset key and Asset dictionary
         """
         band_name = band_name_from_href(href)
         if band_name in BANDS["common"]:
@@ -32,18 +32,15 @@ class STACFragments:
             asset = self.assets[asset_key]
         else:
             product = product_from_href(href)
-            asset_key = BANDS[product][band_name]
+            asset_key = BANDS[product][band_name]["common_name"]
             asset = self.assets[asset_key]
             asset["eo:bands"][0]["name"] = band_name
+            asset["gsd"] = BANDS[product][band_name]["gsd"]
         asset["href"] = make_absolute_href(href)
         return (asset_key, asset)
 
     def collection_dict(self) -> Dict[str, Any]:
-        """Returns a dictionary of Collection fields.
-
-        Returns:
-            Dict[str, Any]: Dictionary of Collection fields
-        """
+        """Returns a dictionary of Collection fields."""
         collection: Dict[str, Any] = self._load("collection.json")
         collection["extent"] = Extent.from_dict(collection["extent"])
         collection["providers"] = [
@@ -53,6 +50,8 @@ class STACFragments:
         return collection
 
     def collection_eo_bands_summary(self) -> List[Dict[str, Any]]:
+        """Returns a list of all Asset eo:bands for inclusion in Collection
+        summaries."""
         summary = []
         for asset in self.assets.values():
             if "eo:bands" in asset:

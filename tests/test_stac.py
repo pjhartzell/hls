@@ -12,6 +12,7 @@ def test_create_l30_item() -> None:
     asset_dict = item.assets
     assert "fmask" in asset_dict  # common asset
     assert "thermal_infrared_1" in asset_dict  # eo asset specific to landsat
+    assert asset_dict["blue"].to_dict()["gsd"] == 30
     item.validate()
 
 
@@ -22,6 +23,7 @@ def test_create_s30_item() -> None:
     asset_dict = item.assets
     assert "fmask" in asset_dict  # common asset
     assert "red_edge_1" in asset_dict  # eo asset specific to sentinel
+    assert asset_dict["blue"].to_dict()["gsd"] == 10
     item.validate()
 
 

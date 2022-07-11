@@ -1,20 +1,17 @@
 {
   "type": "Feature",
   "stac_version": "1.0.0",
-  "id": "HLS.L30.T19LDD.2022165T144027.v2.0",
+  "id": "HLS.S30.T19LDD.2022166T144741.v2.0",
   "properties": {
-    "sci:doi": "10.5067/HLS/HLSL30.002",
-    "start_datetime": "2022-06-14T14:40:27.710686Z",
-    "end_datetime": "2022-06-14T14:40:51.652532Z",
-    "created": "2022-07-06T20:53:31.735263Z",
-    "platform": "landsat-9",
+    "sci:doi": "10.5067/HLS/HLSS30.002",
+    "created": "2022-07-11T20:01:14.986523Z",
+    "platform": "sentinel-2a",
     "instruments": [
-      "oli",
-      "tiirs"
+      "msi"
     ],
-    "eo:cloud_cover": 73,
-    "view:azimuth": 175.478337238966,
-    "view:sun_azimuth": 37.4140983639312,
+    "eo:cloud_cover": 57,
+    "view:azimuth": 108.4,
+    "view:sun_azimuth": 33.2,
     "proj:epsg": 32619,
     "proj:shape": [
       3660,
@@ -31,7 +28,7 @@
     "mgrs:utm_zone": 19,
     "mgrs:latitude_band": "L",
     "mgrs:grid_square": "DD",
-    "datetime": "2022-06-14T14:40:27.710686Z"
+    "datetime": "2022-06-15T14:57:16.704295Z"
   },
   "geometry": {
     "type": "Polygon",
@@ -63,14 +60,32 @@
   "links": [
     {
       "rel": "cite-as",
-      "href": "https://doi.org/10.5067/HLS/HLSL30.002",
+      "href": "https://doi.org/10.5067/HLS/HLSS30.002",
       "type": "text/html",
-      "title": "LP DAAC - HLSL30 v002"
+      "title": "LP DAAC - HLSS30 v002"
+    },
+    {
+      "rel": "root",
+      "href": "../collection.json",
+      "type": "application/json",
+      "title": "Harmonized Landsat Sentinel-2"
+    },
+    {
+      "rel": "collection",
+      "href": "../collection.json",
+      "type": "application/json",
+      "title": "Harmonized Landsat Sentinel-2"
+    },
+    {
+      "rel": "parent",
+      "href": "../collection.json",
+      "type": "application/json",
+      "title": "Harmonized Landsat Sentinel-2"
     }
   ],
   "assets": {
     "coastal_aerosol": {
-      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B01.tif",
+      "href": "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.B01.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
       "title": "Coastal/Aerosol (0.43-0.45 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
       "raster:bands": [
@@ -90,13 +105,14 @@
           "name": "B01"
         }
       ],
+      "gsd": 60,
       "roles": [
         "data",
         "reflectance"
       ]
     },
     "blue": {
-      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B02.tif",
+      "href": "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.B02.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
       "title": "Blue (0.46-0.51 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
       "raster:bands": [
@@ -116,13 +132,14 @@
           "name": "B02"
         }
       ],
+      "gsd": 10,
       "roles": [
         "data",
         "reflectance"
       ]
     },
     "green": {
-      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B03.tif",
+      "href": "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.B03.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
       "title": "Green (0.53-0.59 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
       "raster:bands": [
@@ -142,13 +159,14 @@
           "name": "B03"
         }
       ],
+      "gsd": 10,
       "roles": [
         "data",
         "reflectance"
       ]
     },
     "red": {
-      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B04.tif",
+      "href": "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.B04.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
       "title": "Red (0.64-0.67 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
       "raster:bands": [
@@ -168,13 +186,119 @@
           "name": "B04"
         }
       ],
+      "gsd": 10,
+      "roles": [
+        "data",
+        "reflectance"
+      ]
+    },
+    "red_edge_1": {
+      "href": "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.B05.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Red-Edge 1 (0.69-0.71 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+      "raster:bands": [
+        {
+          "data_type": "int16",
+          "nodata": -9999,
+          "scale": 0.0001,
+          "spatial_resolution": 30
+        }
+      ],
+      "eo:bands": [
+        {
+          "description": "Red-Edge 1",
+          "center_wavelength": 0.7,
+          "full_width_half_max": 0.02,
+          "name": "B05"
+        }
+      ],
+      "gsd": 20,
+      "roles": [
+        "data",
+        "reflectance"
+      ]
+    },
+    "red_edge_2": {
+      "href": "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.B06.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Red-Edge 2 (0.73-0.75 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+      "raster:bands": [
+        {
+          "data_type": "int16",
+          "nodata": -9999,
+          "scale": 0.0001,
+          "spatial_resolution": 30
+        }
+      ],
+      "eo:bands": [
+        {
+          "description": "Red-Edge 2",
+          "center_wavelength": 0.74,
+          "full_width_half_max": 0.02,
+          "name": "B06"
+        }
+      ],
+      "gsd": 20,
+      "roles": [
+        "data",
+        "reflectance"
+      ]
+    },
+    "red_edge_3": {
+      "href": "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.B07.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Red-Edge 3(0.77-0.79 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+      "raster:bands": [
+        {
+          "data_type": "int16",
+          "nodata": -9999,
+          "scale": 0.0001,
+          "spatial_resolution": 30
+        }
+      ],
+      "eo:bands": [
+        {
+          "description": "Red-Edge 3",
+          "center_wavelength": 0.78,
+          "full_width_half_max": 0.02,
+          "name": "B07"
+        }
+      ],
+      "gsd": 20,
+      "roles": [
+        "data",
+        "reflectance"
+      ]
+    },
+    "nir_broad": {
+      "href": "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.B08.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "NIR Broad (0.78-0.88 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+      "raster:bands": [
+        {
+          "data_type": "int16",
+          "nodata": -9999,
+          "scale": 0.0001,
+          "spatial_resolution": 30
+        }
+      ],
+      "eo:bands": [
+        {
+          "common_name": "nir",
+          "description": "NIR broad",
+          "center_wavelength": 0.83,
+          "full_width_half_max": 0.1,
+          "name": "B08"
+        }
+      ],
+      "gsd": 10,
       "roles": [
         "data",
         "reflectance"
       ]
     },
     "nir_narrow": {
-      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B05.tif",
+      "href": "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.B8A.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
       "title": "NIR (0.85-0.88 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
       "raster:bands": [
@@ -191,18 +315,19 @@
           "description": "NIR narrow",
           "center_wavelength": 0.865,
           "full_width_half_max": 0.03,
-          "name": "B05"
+          "name": "B8A"
         }
       ],
+      "gsd": 20,
       "roles": [
         "data",
         "reflectance"
       ]
     },
-    "swir_1": {
-      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B06.tif",
+    "water_vapor": {
+      "href": "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.B09.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
-      "title": "SWIR16 (1.57-1.65 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+      "title": "Water Vapor (0.93-0.95 micrometer) Top of Atmosphere Reflectance",
       "raster:bands": [
         {
           "data_type": "int16",
@@ -213,46 +338,20 @@
       ],
       "eo:bands": [
         {
-          "common_name": "swir16",
-          "description": "SWIR 1",
-          "center_wavelength": 1.61,
-          "full_width_half_max": 0.08,
-          "name": "B06"
+          "description": "Water vapor",
+          "center_wavelength": 0.94,
+          "full_width_half_max": 0.02,
+          "name": "B09"
         }
       ],
-      "roles": [
-        "data",
-        "reflectance"
-      ]
-    },
-    "swir_2": {
-      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B07.tif",
-      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
-      "title": "SWIR22 (2.11-2.29 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
-      "raster:bands": [
-        {
-          "data_type": "int16",
-          "nodata": -9999,
-          "scale": 0.0001,
-          "spatial_resolution": 30
-        }
-      ],
-      "eo:bands": [
-        {
-          "common_name": "swir22",
-          "description": "SWIR 2",
-          "center_wavelength": 2.2,
-          "full_width_half_max": 0.18,
-          "name": "B07"
-        }
-      ],
+      "gsd": 60,
       "roles": [
         "data",
         "reflectance"
       ]
     },
     "cirrus": {
-      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B09.tif",
+      "href": "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.B10.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
       "title": "Cirrus (1.36-1.38 micrometer) Top of Atmosphere Reflectance",
       "raster:bands": [
@@ -269,70 +368,71 @@
           "description": "Cirrus",
           "center_wavelength": 1.37,
           "full_width_half_max": 0.02,
-          "name": "B09"
+          "name": "B10"
         }
       ],
+      "gsd": 60,
       "roles": [
         "data",
         "reflectance"
       ]
     },
-    "thermal_infrared_1": {
-      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B10.tif",
+    "swir_1": {
+      "href": "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.B11.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
-      "title": "LWIR11 (10.60-11.19 micrometer) Top of Atmosphere Brightness Temperature",
+      "title": "SWIR16 (1.57-1.65 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
       "raster:bands": [
         {
           "data_type": "int16",
           "nodata": -9999,
-          "unit": "degree Celsius",
-          "scale": 0.01,
+          "scale": 0.0001,
           "spatial_resolution": 30
         }
       ],
       "eo:bands": [
         {
-          "common_name": "lwir11",
-          "description": "Thermal infrared 1",
-          "center_wavelength": 10.9,
-          "full_width_half_max": 0.6,
-          "name": "B10"
-        }
-      ],
-      "roles": [
-        "data",
-        "temperature"
-      ]
-    },
-    "thermal_infrared_2": {
-      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.B11.tif",
-      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
-      "title": "LWIR12 (11.50-12.51 micrometer) Top of Atmosphere Brightness Temperature",
-      "raster:bands": [
-        {
-          "data_type": "int16",
-          "nodata": -9999,
-          "unit": "degree Celsius",
-          "scale": 0.01,
-          "spatial_resolution": 30
-        }
-      ],
-      "eo:bands": [
-        {
-          "common_name": "lwir12",
-          "description": "Thermal infrared 2",
-          "center_wavelength": 12.0,
-          "full_width_half_max": 1.0,
+          "common_name": "swir16",
+          "description": "SWIR 1",
+          "center_wavelength": 1.61,
+          "full_width_half_max": 0.08,
           "name": "B11"
         }
       ],
+      "gsd": 20,
       "roles": [
         "data",
-        "temperature"
+        "reflectance"
+      ]
+    },
+    "swir_2": {
+      "href": "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.B12.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "SWIR22 (2.11-2.29 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+      "raster:bands": [
+        {
+          "data_type": "int16",
+          "nodata": -9999,
+          "scale": 0.0001,
+          "spatial_resolution": 30
+        }
+      ],
+      "eo:bands": [
+        {
+          "common_name": "swir22",
+          "description": "SWIR 2",
+          "center_wavelength": 2.2,
+          "full_width_half_max": 0.18,
+          "name": "B12"
+        }
+      ],
+      "gsd": 20,
+      "roles": [
+        "data",
+        "reflectance"
       ]
     },
     "fmask": {
-      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.Fmask.tif",
+      "href": "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.Fmask.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
       "title": "Quality Assessment Generated from the Function of Mask (Fmask) Algorithm",
       "raster:bands": [
@@ -449,7 +549,7 @@
       ]
     },
     "saa": {
-      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.SAA.tif",
+      "href": "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.SAA.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
       "title": "Sun Azimuth Angle (SAA)",
       "raster:bands": [
@@ -466,7 +566,7 @@
       ]
     },
     "sza": {
-      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.SZA.tif",
+      "href": "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.SZA.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
       "title": "Sun Zenith Angle (SZA)",
       "raster:bands": [
@@ -483,7 +583,7 @@
       ]
     },
     "vaa": {
-      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.VAA.tif",
+      "href": "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.VAA.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
       "title": "View Azimuth Angle (VAA)",
       "raster:bands": [
@@ -500,7 +600,7 @@
       ]
     },
     "vza": {
-      "href": "../../tests/data-files/external/L30/HLS.L30.T19LDD.2022165T144027.v2.0.VZA.tif",
+      "href": "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.VZA.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
       "title": "View Zenith Angle (VZA)",
       "raster:bands": [
@@ -530,6 +630,7 @@
     "https://stac-extensions.github.io/mgrs/v1.0.0/schema.json",
     "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
-    "https://stac-extensions.github.io/classification/v1.0.0/schema.json"
-  ]
+    "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
+  ],
+  "collection": "hls"
 }

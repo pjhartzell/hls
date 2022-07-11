@@ -65,8 +65,8 @@ class Metadata:
             bbox = list(dataset.bounds)
 
         cloud_cover = int(tags["cloud_coverage"])
-        sun_azimuth = float(tags["MEAN_SUN_AZIMUTH_ANGLE"])
-        azimuth = float(tags["MEAN_VIEW_AZIMUTH_ANGLE"])
+        sun_azimuth = round(float(tags["MEAN_SUN_AZIMUTH_ANGLE"]), 1)
+        azimuth = round(float(tags["MEAN_VIEW_AZIMUTH_ANGLE"]), 1)
         processing_datetime = parse(tags["HLS_PROCESSING_TIME"])
         sensing_time = [parse(dt) for dt in tags["SENSING_TIME"].split(";")]
 
@@ -125,6 +125,18 @@ def hls_metadata(
     cog_href: str,
     read_href_modifier: Optional[ReadHrefModifier] = None,
 ) -> Metadata:
+    """Checks COG HREF validity and returns metadata derived from the COG file.
+
+    Args:
+        cog_href (str): HREF to a single COG asset of an HLS granule. The COG
+            must contain EO data.
+        read_href_modifier (Optional[ReadHrefModifier], optional): An optional
+                function to modify the href (e.g. to add a token to a url).
+                Defaults to None.
+
+    Returns:
+        Metadata: a dataclass containing metadata generated from the COG HREF.
+    """
     product = utils.product_from_href(cog_href)
     band_name = utils.band_name_from_href(cog_href)
     if band_name not in constants.BANDS[product]:

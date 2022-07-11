@@ -39,10 +39,20 @@
       "href": "https://doi.org/10.5067/HLS/HLSS30.002",
       "type": "text/html",
       "title": "LP DAAC - HLSS30 v002"
+    },
+    {
+      "rel": "item",
+      "href": "./HLS.L30.T19LDD.2022165T144027.v2.0/HLS.L30.T19LDD.2022165T144027.v2.0.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./HLS.S30.T19LDD.2022166T144741.v2.0/HLS.S30.T19LDD.2022166T144741.v2.0.json",
+      "type": "application/json"
     }
   ],
   "stac_extensions": [
-    "https://stac-extensions.github.io/classification/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/classification/v1.1.0/schema.json",
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
     "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
@@ -599,18 +609,18 @@
     "spatial": {
       "bbox": [
         [
-          -180,
-          -90,
-          180,
-          90
+          -69.93254162161375,
+          -15.46499836257674,
+          -68.9090160446949,
+          -14.470456590104222
         ]
       ]
     },
     "temporal": {
       "interval": [
         [
-          "2013-04-11T00:00:00Z",
-          null
+          "2022-06-14T14:40:27.710686Z",
+          "2022-06-15T14:57:16.704295Z"
         ]
       ]
     }

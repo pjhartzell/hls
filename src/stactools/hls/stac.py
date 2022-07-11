@@ -33,6 +33,22 @@ def create_item(
     check_existence: bool = False,
     antimeridian_strategy: Strategy = Strategy.SPLIT,
 ) -> Item:
+    """Creates a STAC Item for an HLS granule.
+
+    Args:
+        cog_href (str): HREF to one of the EO COG files in the granule.
+        read_href_modifier (Optional[ReadHrefModifier], optional): An optional
+            function to modify the href (e.g. to add a token to a url)
+        check_existence (bool, optional): Flag to check that COGs exist for all
+                granule assets. Defaults to False.
+        antimeridian_strategy (Strategy, optional):Choice of 'normalize' or
+            'split' to either split the Item geometry on -180 longitude or
+            normalize the Item geometry so all longitudes are either positive or
+            negative. Default is 'split'.
+
+    Returns:
+        Item: An HLS STAC Item.
+    """
     metadata = hls_metadata(cog_href, read_href_modifier)
     fragments = STACFragments()
 
@@ -88,14 +104,14 @@ def create_item(
 
 
 def create_collection() -> Collection:
+    """Returns an HLS Collection."""
     fragments = STACFragments()
 
     summaries: Dict[str, Any] = {
         "instruments": [val for values in INSTRUMENT.values() for val in values],
         "platform": PLATFORMS,
         "sci:doi": [value["doi"] for value in SCIENTIFIC.values()],
-        "eo:bands": fragments.collection_eo_bands_summary()
-        # GSD?
+        "eo:bands": fragments.collection_eo_bands_summary(),
     }
 
     collection_fragments = fragments.collection_dict()
