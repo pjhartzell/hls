@@ -57,7 +57,10 @@ def create_item(
         geometry=metadata.geometry,
         bbox=list(shapely.geometry.shape(metadata.geometry).bounds),
         datetime=metadata.acquisition_datetime,
-        properties={"sci:doi": SCIENTIFIC[metadata.product]["doi"]},
+        properties={
+            "sci:doi": SCIENTIFIC[metadata.product]["doi"],
+            "hls:product": f"HLS{metadata.product}",
+        },
     )
 
     cog_hrefs = create_cog_hrefs(
@@ -97,6 +100,8 @@ def create_item(
     item.links.append(Link(**SCIENTIFIC[metadata.product]["cite-as"]))
 
     item.stac_extensions.append(CLASSIFICATION_EXTENSION_HREF)
+
+    item.stac_extensions.sort()
 
     fix_item(item, antimeridian_strategy)
 

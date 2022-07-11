@@ -4,9 +4,10 @@
   "id": "HLS.L30.T19LDD.2022165T144027.v2.0",
   "properties": {
     "sci:doi": "10.5067/HLS/HLSL30.002",
+    "hls:product": "HLSL30",
     "start_datetime": "2022-06-14T14:40:27.710686Z",
     "end_datetime": "2022-06-14T14:40:51.652532Z",
-    "created": "2022-07-11T20:01:09.889152Z",
+    "created": "2022-07-11T20:11:41.278598Z",
     "platform": "landsat-9",
     "instruments": [
       "oli",
@@ -552,13 +553,13 @@
     -14.470456590104222
   ],
   "stac_extensions": [
+    "https://stac-extensions.github.io/classification/v1.1.0/schema.json",
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
-    "https://stac-extensions.github.io/view/v1.0.0/schema.json",
-    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/mgrs/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
-    "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
   "collection": "hls"
 }

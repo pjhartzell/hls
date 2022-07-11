@@ -4,7 +4,8 @@
   "id": "HLS.S30.T19LDD.2022166T144741.v2.0",
   "properties": {
     "sci:doi": "10.5067/HLS/HLSS30.002",
-    "created": "2022-07-11T20:01:14.986523Z",
+    "hls:product": "HLSS30",
+    "created": "2022-07-11T20:11:41.665618Z",
     "platform": "sentinel-2a",
     "instruments": [
       "msi"
@@ -624,13 +625,13 @@
     -14.470456590104222
   ],
   "stac_extensions": [
+    "https://stac-extensions.github.io/classification/v1.1.0/schema.json",
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
-    "https://stac-extensions.github.io/view/v1.0.0/schema.json",
-    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/mgrs/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
-    "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
   "collection": "hls"
 }

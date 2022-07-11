@@ -48,6 +48,7 @@ def create_hls_command(cli: Group) -> Command:
     ) -> None:
         """Creates a STAC Item for an HLS L30 or S30 granule.
 
+        \b
         Args:
             source (str): HREF to a single COG asset of an HLS granule.
             outdir (str): Directory that will contain the STAC Item.
