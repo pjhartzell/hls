@@ -49,7 +49,7 @@ class Metadata:
 
         Args:
             cog_href (str): HREF to the COG file
-            read_href_modifier (Optional[ReadHrefModifier], optional): An
+            read_href_modifier (ReadHrefModifier, optional): An
                 optional function to modify the href (e.g. to add a token to a
                 url)
 
@@ -130,7 +130,7 @@ def hls_metadata(
     Args:
         cog_href (str): HREF to a single COG asset of an HLS granule. The COG
             must contain EO data.
-        read_href_modifier (Optional[ReadHrefModifier], optional): An optional
+        read_href_modifier (ReadHrefModifier, optional): An optional
                 function to modify the href (e.g. to add a token to a url).
                 Defaults to None.
 

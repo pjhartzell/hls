@@ -18,7 +18,7 @@ def modify_href(
 
     Args:
         href (str): The HREF to be modified
-        read_href_modifier (ReadHrefModifier): function that modifies an HREF
+        read_href_modifier (ReadHrefModifier, optional): function that modifies an HREF
 
     Returns:
         str: Modified HREF
@@ -44,7 +44,7 @@ def create_cog_hrefs(
         product (str): The HLS product, either 'L30' or 'S30'.
         check_existence (bool): If True, checks that each created COG href
             exists.
-        read_href_modifier (Optional[ReadHrefModifier], optional): An optional
+        read_href_modifier (ReadHrefModifier, optional): An optional
             function to modify the href (e.g. to add a token to a url) for use
             in checking href existence.
 

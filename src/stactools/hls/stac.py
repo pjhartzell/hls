@@ -37,7 +37,7 @@ def create_item(
 
     Args:
         cog_href (str): HREF to one of the EO COG files in the granule.
-        read_href_modifier (Optional[ReadHrefModifier], optional): An optional
+        read_href_modifier (ReadHrefModifier, optional): An optional
             function to modify the href (e.g. to add a token to a url)
         check_existence (bool, optional): Flag to check that COGs exist for all
                 granule assets. Defaults to False.
