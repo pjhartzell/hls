@@ -34,7 +34,7 @@ def create_hls_command(cli: Group) -> Command:
     )
     @click.option(
         "-a",
-        "--antimeridian_strategy",
+        "--antimeridian-strategy",
         type=click.Choice(["normalize", "split"], case_sensitive=False),
         default="split",
         show_default=True,
