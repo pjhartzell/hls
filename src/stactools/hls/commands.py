@@ -127,7 +127,7 @@ def create_hls_command(cli: Group) -> Command:
         collection.update_extent_from_items()
 
         collection.catalog_type = CatalogType.SELF_CONTAINED
-        collection.make_all_asset_hrefs_relative
+        collection.make_all_asset_hrefs_relative()
         collection.validate_all()
         collection.save()
 
