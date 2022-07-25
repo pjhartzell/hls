@@ -56,8 +56,8 @@ class Metadata:
         Returns:
             Metadata: A Metadata dataclass
         """
-        read_h5_href = utils.modify_href(cog_href, read_href_modifier)
-        with rasterio.open(read_h5_href) as dataset:
+        read_cog_href = utils.modify_href(cog_href, read_href_modifier)
+        with rasterio.open(read_cog_href) as dataset:
             transform = dataset.transform[0:6]
             shape = dataset.shape
             epsg = dataset.crs.to_epsg()
