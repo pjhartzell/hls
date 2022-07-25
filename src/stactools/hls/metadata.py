@@ -1,3 +1,4 @@
+import re
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Dict, List, Optional
@@ -7,7 +8,7 @@ from dateutil.parser import parse
 from pystac.utils import datetime_to_str
 from shapely.geometry import box, mapping
 from stactools.core.io import ReadHrefModifier
-from stactools.core.projection import reproject_geom
+from stactools.core.projection import epsg_from_utm_zone_number, reproject_geom
 
 from stactools.hls import constants, utils
 
@@ -16,6 +17,10 @@ class IncorrectAssetHref(Exception):
     """An HREF to a EO data band (not an Fmask, azimuth, or zenith band) COG is
     required.
     """
+
+
+class MissingUtmZone(Exception):
+    """ "Unable to parse the UTM zone from CRS WKT string."""
 
 
 @dataclass
@@ -60,9 +65,19 @@ class Metadata:
         with rasterio.open(read_cog_href) as dataset:
             transform = dataset.transform[0:6]
             shape = dataset.shape
-            epsg = dataset.crs.to_epsg()
             tags = dataset.tags()
             bbox = list(dataset.bounds)
+            wkt = dataset.crs.wkt
+
+        pattern = re.compile(r"UTM Zone (\d+)", re.I)
+        search = pattern.search(wkt)
+        if search:
+            utm_zone = int(search.group(1))
+            epsg = epsg_from_utm_zone_number(utm_zone, south=False)
+        else:
+            raise MissingUtmZone(
+                f"Unable to parse UTM zone number from WKT string: {wkt}"
+            )
 
         cloud_cover = int(tags["cloud_coverage"])
         sun_azimuth = round(float(tags["MEAN_SUN_AZIMUTH_ANGLE"]), 1)

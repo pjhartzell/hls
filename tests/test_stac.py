@@ -27,6 +27,13 @@ def test_create_s30_item() -> None:
     item.validate()
 
 
+def test_parse_old_wkt() -> None:
+    href = "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LCD.2022034T145719.v2.0.B01.tif"  # noqa
+    item = stac.create_item(href)
+    assert item.properties["proj:epsg"] == 32619
+    item.validate()
+
+
 def test_read_href_modifier() -> None:
     href = "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.B01.tif"  # noqa
 
