@@ -7,47 +7,21 @@ from click import Command, Group
 from stactools.testing.cli_test import CliTestCase
 
 from stactools.hls.commands import create_hls_command
+from stactools.hls.utils import id_from_href
 
 
 class CommandsTest(CliTestCase):
     def create_subcommand_functions(self) -> List[Callable[[Group], Command]]:
         return [create_hls_command]
 
-    def test_create_collection(self) -> None:
-        with TemporaryDirectory() as tmp_dir:
-            # Run your custom create-collection command and validate
-
-            # Example:
-            destination = os.path.join(tmp_dir, "collection.json")
-
-            result = self.run_command(f"hls create-collection {destination}")
-
-            assert result.exit_code == 0, "\n{}".format(result.output)
-
-            jsons = [p for p in os.listdir(tmp_dir) if p.endswith(".json")]
-            assert len(jsons) == 1
-
-            collection = pystac.read_file(destination)
-            assert collection.id == "my-collection-id"
-            # assert collection.other_attr...
-
-            collection.validate()
-
     def test_create_item(self) -> None:
         with TemporaryDirectory() as tmp_dir:
-            # Run your custom create-item command and validate
-
-            # Example:
-            infile = "/path/to/asset.tif"
-            destination = os.path.join(tmp_dir, "item.json")
-            result = self.run_command(f"hls create-item {infile} {destination}")
+            infile = "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/l30/HLS.L30.T19LDD.2022165T144027.v2.0.B01.tif"  # noqa
+            result = self.run_command(f"hls create-item {infile} {tmp_dir}")
             assert result.exit_code == 0, "\n{}".format(result.output)
 
-            jsons = [p for p in os.listdir(tmp_dir) if p.endswith(".json")]
-            assert len(jsons) == 1
-
-            item = pystac.read_file(destination)
-            assert item.id == "my-item-id"
-            # assert item.other_attr...
-
+            item_id = id_from_href(infile)
+            item_path = os.path.join(tmp_dir, f"{item_id}.json")
+            item = pystac.read_file(item_path)
+            assert item.id == "HLS.L30.T19LDD.2022165T144027.v2.0"
             item.validate()

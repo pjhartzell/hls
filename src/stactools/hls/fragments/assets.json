@@ -1,0 +1,520 @@
+{
+    "coastal_aerosol": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "common_name": "coastal",
+                "description": "Coastal aerosol",
+                "center_wavelength": 0.44,
+                "full_width_half_max": 0.02
+            }
+        ],
+        "title": "Coastal/Aerosol (0.43-0.45 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "blue": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "common_name": "blue",
+                "description": "Visible blue",
+                "center_wavelength": 0.48,
+                "full_width_half_max": 0.06
+            }
+        ],
+        "title": "Blue (0.46-0.51 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "green": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "common_name": "green",
+                "description": "Visible green",
+                "center_wavelength": 0.56,
+                "full_width_half_max": 0.06
+            }
+        ],
+        "title": "Green (0.53-0.59 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "red": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "common_name": "red",
+                "description": "Visible red",
+                "center_wavelength": 0.655,
+                "full_width_half_max": 0.03
+            }
+        ],
+        "title": "Red (0.64-0.67 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "red_edge_1": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "description": "Red-Edge 1",
+                "center_wavelength": 0.70,
+                "full_width_half_max": 0.02
+            }
+        ],
+        "title": "Red-Edge 1 (0.69-0.71 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "red_edge_2": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "description": "Red-Edge 2",
+                "center_wavelength": 0.74,
+                "full_width_half_max": 0.02
+            }
+        ],
+        "title": "Red-Edge 2 (0.73-0.75 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "red_edge_3": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "description": "Red-Edge 3",
+                "center_wavelength": 0.78,
+                "full_width_half_max": 0.02
+            }
+        ],
+        "title": "Red-Edge 3(0.77-0.79 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "nir_broad": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "common_name": "nir",
+                "description": "NIR broad",
+                "center_wavelength": 0.83,
+                "full_width_half_max": 0.10
+            }
+        ],
+        "title": "NIR Broad (0.78-0.88 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "nir_narrow": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "common_name": "nir",
+                "description": "NIR narrow",
+                "center_wavelength": 0.865,
+                "full_width_half_max": 0.03
+            }
+        ],
+        "title": "NIR (0.85-0.88 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "swir_1": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "common_name": "swir16",
+                "description": "SWIR 1",
+                "center_wavelength": 1.61,
+                "full_width_half_max": 0.08
+            }
+        ],
+        "title": "SWIR16 (1.57-1.65 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "swir_2": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "common_name": "swir22",
+                "description": "SWIR 2",
+                "center_wavelength": 2.2,
+                "full_width_half_max": 0.18
+            }
+        ],
+        "title": "SWIR22 (2.11-2.29 micrometer) Nadir BRDF-Adjusted Surface Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "water_vapor": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "description": "Water vapor",
+                "center_wavelength": 0.94,
+                "full_width_half_max": 0.02
+            }
+        ],
+        "title": "Water Vapor (0.93-0.95 micrometer) Top of Atmosphere Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "cirrus": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "scale": 0.0001,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "common_name": "cirrus",
+                "description": "Cirrus",
+                "center_wavelength": 1.37,
+                "full_width_half_max": 0.02
+            }
+        ],
+        "title": "Cirrus (1.36-1.38 micrometer) Top of Atmosphere Reflectance",
+        "roles": [
+            "data",
+            "reflectance"
+        ]
+    },
+    "thermal_infrared_1": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "unit": "degree Celsius",
+                "scale": 0.01,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "common_name": "lwir11",
+                "description": "Thermal infrared 1",
+                "center_wavelength": 10.9,
+                "full_width_half_max": 0.6
+            }
+        ],
+        "title": "LWIR11 (10.60-11.19 micrometer) Top of Atmosphere Brightness Temperature",
+        "roles": [
+            "data",
+            "temperature"
+        ]
+    },
+    "thermal_infrared_2": {
+        "raster:bands": [
+            {
+                "data_type": "int16",
+                "nodata": -9999,
+                "unit": "degree Celsius",
+                "scale": 0.01,
+                "spatial_resolution": 30
+            }
+        ],
+        "eo:bands": [
+            {
+                "common_name": "lwir12",
+                "description": "Thermal infrared 2",
+                "center_wavelength": 12.0,
+                "full_width_half_max": 1.0
+            }
+        ],
+        "title": "LWIR12 (11.50-12.51 micrometer) Top of Atmosphere Brightness Temperature",
+        "roles": [
+            "data",
+            "temperature"
+        ]
+    },
+    "fmask": {
+        "raster:bands": [
+            {
+                "data_type": "uint8",
+                "nodata": 255,
+                "unit": "bit field",
+                "spatial_resolution": 30
+            }
+        ],
+        "classification:bitfields": [
+            {
+                "name": "cloud",
+                "offset": 1,
+                "length": 1,
+                "classes": [
+                    {
+                        "description": "No",
+                        "value": 0
+                    },
+                    {
+                        "description": "Yes",
+                        "value": 1
+                    }
+                ]
+            },
+            {
+                "name": "adjacent",
+                "description": "Adjacent to cloud/shadow",
+                "offset": 2,
+                "length": 1,
+                "classes": [
+                    {
+                        "description": "No",
+                        "value": 0
+                    },
+                    {
+                        "description": "Yes",
+                        "value": 1
+                    }
+                ]
+            },
+            {
+                "name": "cloud_shadow",
+                "offset": 3,
+                "length": 1,
+                "classes": [
+                    {
+                        "description": "No",
+                        "value": 0
+                    },
+                    {
+                        "description": "Yes",
+                        "value": 1
+                    }
+                ]
+            },
+            {
+                "name": "snow_ice",
+                "offset": 4,
+                "length": 1,
+                "classes": [
+                    {
+                        "description": "No",
+                        "value": 0
+                    },
+                    {
+                        "description": "Yes",
+                        "value": 1
+                    }
+                ]
+            },
+            {
+                "name": "water",
+                "offset": 5,
+                "length": 1,
+                "classes": [
+                    {
+                        "description": "No",
+                        "value": 0
+                    },
+                    {
+                        "description": "Yes",
+                        "value": 1
+                    }
+                ]
+            },
+            {
+                "name": "aerosol_level",
+                "offset": 6,
+                "length": 2,
+                "classes": [
+                    {
+                        "description": "Climatology",
+                        "value": 0
+                    },
+                    {
+                        "description": "Low",
+                        "value": 1
+                    },
+                    {
+                        "description": "Moderate",
+                        "value": 2
+                    },
+                    {
+                        "description": "High",
+                        "value": 3
+                    }
+                ]
+            }
+        ],
+        "title": "Quality Assessment Generated from the Function of Mask (Fmask) Algorithm",
+        "roles": [
+            "data"
+        ]
+    },
+    "saa": {
+        "raster:bands": [
+            {
+                "data_type": "uint16",
+                "nodata": 40000,
+                "unit": "degree",
+                "scale": 0.01,
+                "spatial_resolution": 30
+            }
+        ],
+        "title": "Sun Azimuth Angle (SAA)",
+        "roles": [
+            "data"
+        ]
+    },
+    "sza": {
+        "raster:bands": [
+            {
+                "data_type": "uint16",
+                "nodata": 40000,
+                "unit": "degree",
+                "scale": 0.01,
+                "spatial_resolution": 30
+            }
+        ],
+        "title": "Sun Zenith Angle (SZA)",
+        "roles": [
+            "data"
+        ]
+    },
+    "vaa": {
+        "raster:bands": [
+            {
+                "data_type": "uint16",
+                "nodata": 40000,
+                "unit": "degree",
+                "scale": 0.01,
+                "spatial_resolution": 30
+            }
+        ],
+        "title": "View Azimuth Angle (VAA)",
+        "roles": [
+            "data"
+        ]
+    },
+    "vza": {
+        "raster:bands": [
+            {
+                "data_type": "uint16",
+                "nodata": 40000,
+                "unit": "degree",
+                "scale": 0.01,
+                "spatial_resolution": 30
+            }
+        ],
+        "title": "View Zenith Angle (VZA)",
+        "roles": [
+            "data"
+        ]
+    }
+}

@@ -1,117 +1,154 @@
 import logging
 from datetime import datetime, timezone
+from typing import Any, Dict, Optional
 
-from pystac import (
-    Asset,
-    CatalogType,
-    Collection,
-    Extent,
-    Item,
-    MediaType,
-    Provider,
-    ProviderRole,
-    SpatialExtent,
-    TemporalExtent,
-)
+import shapely.geometry
+from pystac import Asset, Collection, Item, Link, Summaries
+from pystac.extensions.eo import EOExtension
+from pystac.extensions.item_assets import AssetDefinition, ItemAssetsExtension
 from pystac.extensions.projection import ProjectionExtension
+from pystac.extensions.raster import RasterExtension
+from pystac.extensions.scientific import ScientificExtension
+from pystac.extensions.view import ViewExtension
+from stactools.core.io import ReadHrefModifier
+from stactools.core.utils.antimeridian import Strategy, fix_item
+
+from stactools.hls.constants import (
+    CLASSIFICATION_EXTENSION_HREF,
+    INSTRUMENT,
+    MGRS_EXTENSION_HREF,
+    PLATFORMS,
+    SCIENTIFIC,
+)
+from stactools.hls.fragments import STACFragments
+from stactools.hls.metadata import hls_metadata
+from stactools.hls.utils import create_cog_hrefs
 
 logger = logging.getLogger(__name__)
 
 
-def create_collection() -> Collection:
-    """Create a STAC Collection
-
-    This function includes logic to extract all relevant metadata from
-    an asset describing the STAC collection and/or metadata coded into an
-    accompanying constants.py file.
-
-    See `Collection<https://pystac.readthedocs.io/en/latest/api.html#collection>`_.
-
-    Returns:
-        Collection: STAC Collection object
-    """
-    providers = [
-        Provider(
-            name="The OS Community",
-            roles=[ProviderRole.PRODUCER, ProviderRole.PROCESSOR, ProviderRole.HOST],
-            url="https://github.com/stac-utils/stactools",
-        )
-    ]
-
-    # Time must be in UTC
-    demo_time = datetime.now(tz=timezone.utc)
-
-    extent = Extent(
-        SpatialExtent([[-180.0, 90.0, 180.0, -90.0]]),
-        TemporalExtent([[demo_time, None]]),
-    )
-
-    collection = Collection(
-        id="my-collection-id",
-        title="A dummy STAC Collection",
-        description="Used for demonstration purposes",
-        license="CC-0",
-        providers=providers,
-        extent=extent,
-        catalog_type=CatalogType.RELATIVE_PUBLISHED,
-    )
-
-    return collection
-
-
-def create_item(asset_href: str) -> Item:
-    """Create a STAC Item
-
-    This function should include logic to extract all relevant metadata from an
-    asset, metadata asset, and/or a constants.py file.
-
-    See `Item<https://pystac.readthedocs.io/en/latest/api.html#item>`_.
+def create_item(
+    cog_href: str,
+    read_href_modifier: Optional[ReadHrefModifier] = None,
+    check_existence: bool = False,
+    antimeridian_strategy: Strategy = Strategy.SPLIT,
+) -> Item:
+    """Creates a STAC Item for an HLS granule.
 
     Args:
-        asset_href (str): The HREF pointing to an asset associated with the item
+        cog_href (str): HREF to one of the EO COG files in the granule.
+        read_href_modifier (ReadHrefModifier, optional): An optional
+            function to modify the href (e.g. to add a token to a url)
+        check_existence (bool, optional): Flag to check that COGs exist for all
+                granule assets. Defaults to False.
+        antimeridian_strategy (Strategy, optional):Choice of 'normalize' or
+            'split' to either split the Item geometry on -180 longitude or
+            normalize the Item geometry so all longitudes are either positive or
+            negative. Default is 'split'.
 
     Returns:
-        Item: STAC Item object
+        Item: An HLS STAC Item.
     """
-
-    properties = {
-        "title": "A dummy STAC Item",
-        "description": "Used for demonstration purposes",
-    }
-
-    demo_geom = {
-        "type": "Polygon",
-        "coordinates": [[[-180, -90], [180, -90], [180, 90], [-180, 90], [-180, -90]]],
-    }
-
-    # Time must be in UTC
-    demo_time = datetime.now(tz=timezone.utc)
+    metadata = hls_metadata(cog_href, read_href_modifier)
+    fragments = STACFragments()
 
     item = Item(
-        id="my-item-id",
-        properties=properties,
-        geometry=demo_geom,
-        bbox=[-180, 90, 180, -90],
-        datetime=demo_time,
-        stac_extensions=[],
+        id=metadata.id,
+        geometry=metadata.geometry,
+        bbox=list(shapely.geometry.shape(metadata.geometry).bounds),
+        datetime=metadata.acquisition_datetime,
+        properties={
+            "sci:doi": SCIENTIFIC[metadata.product]["doi"],
+            "hls:product": f"HLS{metadata.product}",
+        },
     )
 
-    # It is a good idea to include proj attributes to optimize for libs like stac-vrt
-    proj_attrs = ProjectionExtension.ext(item, add_if_missing=True)
-    proj_attrs.epsg = 4326
-    proj_attrs.bbox = [-180, 90, 180, -90]
-    proj_attrs.shape = [1, 1]  # Raster shape
-    proj_attrs.transform = [-180, 360, 0, 90, 0, 180]  # Raster GeoTransform
-
-    # Add an asset to the item (COG for example)
-    item.add_asset(
-        "image",
-        Asset(
-            href=asset_href,
-            media_type=MediaType.COG,
-            roles=["data"],
-            title="A dummy STAC Item COG",
-        ),
+    cog_hrefs = create_cog_hrefs(
+        cog_href,
+        metadata.product,
+        check_existence,
+        read_href_modifier,
     )
+    for href in cog_hrefs:
+        asset_key, asset_dict = fragments.asset(href)
+        item.add_asset(asset_key, Asset.from_dict(asset_dict))
+
+    if metadata.start_end_datetime:
+        item.properties.update(**metadata.start_end_datetime)
+    item.common_metadata.created = datetime.now(tz=timezone.utc)
+    item.common_metadata.platform = metadata.platform
+    item.common_metadata.instruments = metadata.instrument
+
+    eo = EOExtension.ext(item, add_if_missing=True)
+    eo.cloud_cover = metadata.cloud_cover
+
+    view = ViewExtension.ext(item, add_if_missing=True)
+    view.azimuth = metadata.azimuth
+    view.sun_azimuth = metadata.sun_azimuth
+
+    proj = ProjectionExtension.ext(item, add_if_missing=True)
+    proj.epsg = metadata.epsg
+    proj.shape = metadata.shape
+    proj.transform = metadata.transform
+
+    item.stac_extensions.append(MGRS_EXTENSION_HREF)
+    item.properties.update(**metadata.mgrs)
+
+    RasterExtension.add_to(item)
+
+    ScientificExtension.add_to(item)
+    item.links.append(Link(**SCIENTIFIC[metadata.product]["cite-as"]))
+
+    item.stac_extensions.append(CLASSIFICATION_EXTENSION_HREF)
+
+    item.stac_extensions.sort()
+
+    fix_item(item, antimeridian_strategy)
 
     return item
+
+
+def create_collection() -> Collection:
+    """Returns an HLS Collection."""
+    fragments = STACFragments()
+
+    summaries: Dict[str, Any] = {
+        "instruments": [val for values in INSTRUMENT.values() for val in values],
+        "platform": PLATFORMS,
+        "sci:doi": [value["doi"] for value in SCIENTIFIC.values()],
+        "eo:bands": fragments.collection_eo_bands_summary(),
+    }
+
+    collection_fragments = fragments.collection_dict()
+    collection = Collection(
+        id=collection_fragments["id"],
+        title=collection_fragments["title"],
+        description=collection_fragments["description"],
+        license=collection_fragments["license"],
+        keywords=collection_fragments["keywords"],
+        providers=collection_fragments["providers"],
+        extent=collection_fragments["extent"],
+        summaries=Summaries(summaries),
+    )
+    collection.add_links(collection_fragments["links"])
+
+    item_assets_dict = fragments.assets
+    item_assets = {k: AssetDefinition(v) for k, v in item_assets_dict.items()}
+    item_assets_ext = ItemAssetsExtension.ext(collection, add_if_missing=True)
+    item_assets_ext.item_assets = item_assets
+
+    RasterExtension.add_to(collection)
+
+    EOExtension.add_to(collection)
+
+    ScientificExtension.add_to(collection)
+    collection.extra_fields["sci:publications"] = collection_fragments[
+        "sci:publications"
+    ]
+    collection.add_links([Link(**value["cite-as"]) for value in SCIENTIFIC.values()])
+
+    collection.stac_extensions.extend([CLASSIFICATION_EXTENSION_HREF])
+
+    collection.stac_extensions = sorted(collection.stac_extensions)
+
+    return collection
