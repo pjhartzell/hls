@@ -1,6 +1,9 @@
 import os
 from typing import List, Optional
 
+import shapely.ops
+from pystac import Item
+from shapely.geometry import MultiPolygon, Polygon, mapping, shape
 from stactools.core.io import ReadHrefModifier
 from stactools.core.utils import href_exists
 
@@ -97,3 +100,54 @@ def version_from_href(href: str) -> str:
 def band_name_from_href(href: str) -> str:
     """Extracts the band name from an HLS COG file HREF."""
     return filename_parts(href)[-1]
+
+
+def merge_multipolygon(item: Item) -> Item:
+    """Merges overlapping or touching polygons in an Item's geometry.
+
+    Prepares the Item for input to the stactools `fix_item` function. More
+    specifically, this function was built to prepare an Item in which the
+    existing Item geometry is already split along the antimeridian. In this
+    case, `fix_item` is not able to produce a single 'normalized' Polygon that
+    spans the antimeridian unless the pre-split polygon is first merged.
+
+    Args:
+        item (Item): STAC Item, potentially with geometry split across the
+            antimeridian.
+
+    Returns:
+        Item: Item with merged geometry.
+    """
+
+    def _revert(poly: Polygon) -> List[List[float]]:
+        coords = [list(c) for c in list(poly.exterior.coords)]
+        for coord_index, coord in enumerate(coords):
+            if coord[0] > 180:
+                coords[coord_index][0] -= 360
+        return coords
+
+    geometry = shape(item.geometry)
+
+    # force all positive lons so we can merge on an antimeridian split
+    polys = list(geometry.geoms)
+    for poly_index, poly in enumerate(polys):
+        coords = [list(c) for c in list(poly.exterior.coords)]
+        for coord_index, coord in enumerate(coords):
+            if coord[0] < 0:
+                coords[coord_index][0] += 360
+        polys[poly_index] = Polygon(coords)
+
+    merged_geometry = shapely.ops.unary_union(polys)
+
+    # revert back to + and - lon signs for fix_item's expected input
+    if isinstance(merged_geometry, MultiPolygon):
+        polys = list(merged_geometry.geoms)
+        for poly_index, poly in enumerate(polys):
+            coords = _revert(poly)
+            polys[poly_index] = Polygon(coords)
+        item.geometry = mapping(MultiPolygon(polys))
+    else:
+        coords = _revert(merged_geometry)
+        item.geometry = mapping(Polygon(coords))
+
+    return item

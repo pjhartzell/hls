@@ -1,6 +1,6 @@
 import re
 from datetime import datetime
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
 
 import fsspec
 import rasterio
@@ -79,14 +79,16 @@ class Metadata:
 
     @property
     def processing_datetime(self) -> datetime:
-        return parse(self.tags["HLS_PROCESSING_TIME"])
+        t: datetime = parse(self.tags["HLS_PROCESSING_TIME"])
+        return t
 
     @property
     def acquisition_datetime(self) -> datetime:
-        return min(self.sensing_time)
+        t: datetime = min(self.sensing_time)
+        return t
 
     @property
-    def start_end_datetime(self) -> Dict[str, str]:
+    def start_end_datetime(self) -> Optional[Dict[str, str]]:
         se_datetime = None
         if len(self.sensing_time) > 1:
             se_datetime = {
@@ -120,7 +122,7 @@ class Metadata:
         return mgrs
 
     @property
-    def geometry(self):
+    def geometry(self) -> Union[Polygon, MultiPolygon]:
         parts = self.cog_href.split(".")[:-2]
         self.xml_href = f"{'.'.join(parts)}.cmr.xml"
         read_xml_href = utils.modify_href(self.xml_href, self.read_href_modifier)
@@ -133,7 +135,7 @@ class Metadata:
 
         return xml_geometry
 
-    def _get_geometry(self, granule):
+    def _get_geometry(self, granule: Any) -> Union[Polygon, MultiPolygon]:
         polygons = []
         for poly in granule.Spatial.HorizontalSpatialDomain.Geometry.GPolygon:
             ring = []
@@ -143,18 +145,16 @@ class Metadata:
                     float(point.PointLatitude.cdata),
                 )
                 ring.append(geojson_point)
-            polygons.append(tuple(ring))
+            polygons.append(orient(Polygon(ring)))
 
         if len(polygons) == 1:
-            geometry = Polygon(polygons[0])
+            return polygons[0]
         elif len(polygons) > 1:
-            geometry = MultiPolygon(polygons)
+            return MultiPolygon(polygons)
         else:
             raise InvalidGeometry(
                 f"Unable to parse geometry from XML file: {self.xml_href}"
             )
-
-        return orient(geometry)
 
 
 def hls_metadata(

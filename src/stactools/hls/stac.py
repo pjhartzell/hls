@@ -8,7 +8,7 @@ from pystac.extensions.projection import ProjectionExtension
 from pystac.extensions.raster import RasterExtension
 from pystac.extensions.scientific import ScientificExtension
 from pystac.extensions.view import ViewExtension
-from shapely.geometry import mapping
+from shapely.geometry import MultiPolygon, mapping, shape
 from stactools.core.io import ReadHrefModifier
 from stactools.core.utils.antimeridian import Strategy, fix_item
 
@@ -104,6 +104,8 @@ def create_item(
 
     item.stac_extensions.sort()
 
+    if isinstance(shape(item.geometry), MultiPolygon):
+        item = utils.merge_multipolygon(item)
     fix_item(item, antimeridian_strategy)
 
     return item
