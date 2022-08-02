@@ -3,10 +3,13 @@ import shapely.geometry
 from stactools.core.utils.antimeridian import Strategy
 
 from stactools.hls import stac
+from tests import L30, test_data
 
 
 def test_create_l30_item() -> None:
-    href = "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/l30/HLS.L30.T19LDD.2022165T144027.v2.0.B01.tif"  # noqa
+    for filename in L30:
+        test_data.get_external_data(filename)
+    href = test_data.get_external_data("HLS.L30.T19LDD.2022165T144027.v2.0.B01.tif")
     item = stac.create_item(href, check_existence=True)
     assert item.id == "HLS.L30.T19LDD.2022165T144027.v2.0"
     asset_dict = item.assets
@@ -17,8 +20,9 @@ def test_create_l30_item() -> None:
 
 
 def test_create_s30_item() -> None:
-    href = "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.B01.tif"  # noqa
-    item = stac.create_item(href, check_existence=True)
+    href = test_data.get_external_data("HLS.S30.T19LDD.2022166T144741.v2.0.B01.tif")
+    test_data.get_external_data("HLS.S30.T19LDD.2022166T144741.v2.0.cmr.xml")
+    item = stac.create_item(href, check_existence=False)
     assert item.id == "HLS.S30.T19LDD.2022166T144741.v2.0"
     asset_dict = item.assets
     assert "fmask" in asset_dict  # common asset
@@ -28,14 +32,16 @@ def test_create_s30_item() -> None:
 
 
 def test_parse_old_wkt() -> None:
-    href = "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LCD.2022034T145719.v2.0.B01.tif"  # noqa
+    href = test_data.get_external_data("HLS.S30.T19LCD.2022034T145719.v2.0.B01.tif")
+    test_data.get_external_data("HLS.S30.T19LCD.2022034T145719.v2.0.cmr.xml")
     item = stac.create_item(href)
     assert item.properties["proj:epsg"] == 32619
     item.validate()
 
 
 def test_read_href_modifier() -> None:
-    href = "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T19LDD.2022166T144741.v2.0.B01.tif"  # noqa
+    href = test_data.get_external_data("HLS.S30.T19LDD.2022166T144741.v2.0.B01.tif")
+    test_data.get_external_data("HLS.S30.T19LDD.2022166T144741.v2.0.cmr.xml")
 
     did_it = False
 
@@ -49,7 +55,9 @@ def test_read_href_modifier() -> None:
 
 
 def test_antimeridian_normalize() -> None:
-    href = "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T60VXR.2022178T233701.v2.0.B01.tif"  # noqa
+    href = test_data.get_external_data("HLS.S30.T60VXR.2022178T233701.v2.0.B01.tif")
+    test_data.get_external_data("HLS.S30.T60VXR.2022178T233701.v2.0.cmr.xml")
+
     item = stac.create_item(href, antimeridian_strategy=Strategy.NORMALIZE)
     bounds = shapely.geometry.shape(item.geometry).bounds
     assert bounds[0] == pytest.approx(-181.02364614436414)
@@ -58,7 +66,8 @@ def test_antimeridian_normalize() -> None:
 
 
 def test_antimeridian_split() -> None:
-    href = "https://ai4epublictestdata.blob.core.windows.net/stactools/hls/s30/HLS.S30.T60VXR.2022178T233701.v2.0.B01.tif"  # noqa
+    href = test_data.get_external_data("HLS.S30.T60VXR.2022178T233701.v2.0.B01.tif")
+    test_data.get_external_data("HLS.S30.T60VXR.2022178T233701.v2.0.cmr.xml")
     item = stac.create_item(href, antimeridian_strategy=Strategy.SPLIT)
     item_dict = item.to_dict()
     assert len(item_dict["geometry"]["coordinates"]) == 2
