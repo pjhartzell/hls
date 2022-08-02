@@ -137,7 +137,7 @@ class Metadata:
             Dict[str, Any]: data boundary in GeoJSON form.
         """
         if use_raster_footprint:
-            footprint: Dict[str, Any] = data_footprint(
+            footprint: Optional[Dict[str, Any]] = data_footprint(
                 self.read_cog_href,
                 densification_factor=constants.FOOTPRINT_DENSIFICATION_FACTOR,
                 simplify_tolerance=constants.FOOTPRINT_SIMPLIFICATION_TOLERANCE,
