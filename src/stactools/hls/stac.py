@@ -8,7 +8,8 @@ from pystac.extensions.projection import ProjectionExtension
 from pystac.extensions.raster import RasterExtension
 from pystac.extensions.scientific import ScientificExtension
 from pystac.extensions.view import ViewExtension
-from shapely.geometry import MultiPolygon, mapping, shape
+from shapely.geometry import MultiPolygon, shape
+from stactools.core.geometry import bounding_box
 from stactools.core.io import ReadHrefModifier
 from stactools.core.utils.antimeridian import Strategy, fix_item
 
@@ -27,6 +28,7 @@ from stactools.hls.metadata import hls_metadata
 def create_item(
     cog_href: str,
     read_href_modifier: Optional[ReadHrefModifier] = None,
+    use_raster_footprint: bool = False,
     check_existence: bool = False,
     antimeridian_strategy: Strategy = Strategy.SPLIT,
 ) -> Item:
@@ -36,6 +38,9 @@ def create_item(
         cog_href (str): HREF to one of the EO COG files in the granule.
         read_href_modifier (ReadHrefModifier, optional): An optional
             function to modify the href (e.g. to add a token to a url)
+        use_raster_footprint (bool): Flag to use stactools raster_footprint
+            for the Item geometry rather than the boundary in the XML metadata
+            file.
         check_existence (bool, optional): Flag to check that COGs exist for all
                 granule assets. Defaults to False.
         antimeridian_strategy (Strategy, optional):Choice of 'normalize' or
@@ -51,12 +56,12 @@ def create_item(
 
     id = utils.id_from_href(cog_href)
     product = utils.product_from_href(cog_href)
-    polygon = metadata.geometry
+    geometry = metadata.geometry(use_raster_footprint)
 
     item = Item(
         id=id,
-        geometry=mapping(polygon),
-        bbox=polygon.bounds,
+        geometry=geometry,
+        bbox=bounding_box(geometry),
         datetime=metadata.acquisition_datetime,
         properties={
             "sci:doi": SCIENTIFIC[product]["doi"],

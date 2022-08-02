@@ -1,16 +1,17 @@
 import re
 from datetime import datetime
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
 import fsspec
 import rasterio
 import untangle
 from dateutil.parser import parse
 from pystac.utils import datetime_to_str
-from shapely.geometry import MultiPolygon, Polygon
+from shapely.geometry import MultiPolygon, Polygon, mapping
 from shapely.geometry.polygon import orient
 from stactools.core.io import ReadHrefModifier
 from stactools.core.projection import epsg_from_utm_zone_number
+from stactools.core.utils.raster_footprint import data_footprint
 
 from stactools.hls import constants, utils
 
@@ -23,15 +24,17 @@ class MissingUtmZone(Exception):
     """Unable to parse the UTM zone from CRS WKT string."""
 
 
-class InvalidGeometry(Exception):
-    """Unable to parse polygon geometry from XML file."""
+class GeometryError(Exception):
+    """Error creating the Item geometry."""
 
 
 class Metadata:
     """Structure to hold metadata about an HLS granule."""
 
     def __init__(
-        self, cog_href: str, read_href_modifier: Optional[ReadHrefModifier] = None
+        self,
+        cog_href: str,
+        read_href_modifier: Optional[ReadHrefModifier] = None,
     ) -> None:
         """Extracts granule metadata from COG and XML files.
 
@@ -44,8 +47,8 @@ class Metadata:
         self.cog_href = cog_href
         self.read_href_modifier = read_href_modifier
 
-        read_cog_href = utils.modify_href(cog_href, read_href_modifier)
-        with rasterio.open(read_cog_href) as dataset:
+        self.read_cog_href = utils.modify_href(cog_href, read_href_modifier)
+        with rasterio.open(self.read_cog_href) as dataset:
             self.transform = list(dataset.transform[0:6])
             self.shape = list(dataset.shape)
             self.tags = dataset.tags()
@@ -121,8 +124,34 @@ class Metadata:
         }
         return mgrs
 
-    @property
-    def geometry(self) -> Union[Polygon, MultiPolygon]:
+    def geometry(self, use_raster_footprint: bool) -> Dict[str, Any]:
+        """Create GeoJSON representing the data boundary.
+
+        Args:
+            use_raster_footprint (bool): If True, the data boundary is computed
+                from the convex hull of valid (not nodata) pixels in the
+                `cog_href` image. If False, the data boundary is computed from
+                the XML metadata file.
+
+        Returns:
+            Dict[str, Any]: data boundary in GeoJSON form.
+        """
+        if use_raster_footprint:
+            footprint: Dict[str, Any] = data_footprint(
+                self.read_cog_href,
+                densification_factor=constants.FOOTPRINT_DENSIFICATION_FACTOR,
+                simplify_tolerance=constants.FOOTPRINT_SIMPLIFICATION_TOLERANCE,
+            )
+            if footprint is not None:
+                return footprint
+            else:
+                raise GeometryError(
+                    f"Unable to extract footprint from COG: {self.cog_href}"
+                )
+        else:
+            return self._xml_geometry()
+
+    def _xml_geometry(self) -> Dict[str, Any]:
         parts = self.cog_href.split(".")[:-2]
         self.xml_href = f"{'.'.join(parts)}.cmr.xml"
         read_xml_href = utils.modify_href(self.xml_href, self.read_href_modifier)
@@ -131,11 +160,6 @@ class Metadata:
             cmr = untangle.parse(file)
             granule = cmr.Granule
 
-        xml_geometry = self._get_geometry(granule)
-
-        return xml_geometry
-
-    def _get_geometry(self, granule: Any) -> Union[Polygon, MultiPolygon]:
         polygons = []
         for poly in granule.Spatial.HorizontalSpatialDomain.Geometry.GPolygon:
             ring = []
@@ -147,14 +171,17 @@ class Metadata:
                 ring.append(geojson_point)
             polygons.append(orient(Polygon(ring)))
 
+        geometry: Dict[str, Any]
         if len(polygons) == 1:
-            return polygons[0]
+            geometry = mapping(polygons[0])
         elif len(polygons) > 1:
-            return MultiPolygon(polygons)
+            geometry = mapping(MultiPolygon(polygons))
         else:
-            raise InvalidGeometry(
+            raise GeometryError(
                 f"Unable to parse geometry from XML file: {self.xml_href}"
             )
+
+        return geometry
 
 
 def hls_metadata(

@@ -26,6 +26,13 @@ def create_hls_command(cli: Group) -> Command:
     @click.argument("SOURCE")
     @click.argument("OUTDIR")
     @click.option(
+        "-u",
+        "--use-raster-footprint",
+        is_flag=True,
+        default=False,
+        help="Use valid data pixels for Item geometry rather than XML metadata",
+    )
+    @click.option(
         "-c",
         "--check-existence",
         is_flag=True,
@@ -43,6 +50,7 @@ def create_hls_command(cli: Group) -> Command:
     def create_item_command(
         source: str,
         outdir: str,
+        use_raster_footprint: bool,
         check_existence: bool,
         antimeridian_strategy: str,
     ) -> None:
@@ -52,6 +60,9 @@ def create_hls_command(cli: Group) -> Command:
         Args:
             source (str): HREF to a single COG asset of an HLS granule.
             outdir (str): Directory that will contain the STAC Item.
+            use_raster_footprint (bool): Flag to use stactools raster_footprint
+                for the Item geometry rather than the boundary in the XML
+                metadata file.
             check_existence (bool): Flag to check that COGs exist for all
                 granule assets. Default is False.
             antimeridian_strategy (str, optional): Choice of 'normalize' or
@@ -63,6 +74,7 @@ def create_hls_command(cli: Group) -> Command:
 
         item = stac.create_item(
             source,
+            use_raster_footprint=use_raster_footprint,
             check_existence=check_existence,
             antimeridian_strategy=strategy,
         )
@@ -77,6 +89,13 @@ def create_hls_command(cli: Group) -> Command:
     @hls.command("create-collection", short_help="Create a STAC Collection")
     @click.argument("INFILE")
     @click.argument("OUTDIR")
+    @click.option(
+        "-u",
+        "--use-raster-footprint",
+        is_flag=True,
+        default=False,
+        help="Use valid data pixels for Item geometry rather than XML metadata",
+    )
     @click.option(
         "-c",
         "--check-existence",
@@ -93,7 +112,11 @@ def create_hls_command(cli: Group) -> Command:
         help="Geometry strategy for antimeridian scenes",
     )
     def create_collection_command(
-        infile: str, outdir: str, check_existence: bool, antimeridian_strategy: str
+        infile: str,
+        outdir: str,
+        use_raster_footprint: bool,
+        check_existence: bool,
+        antimeridian_strategy: str,
     ) -> None:
         """Creates a STAC Collection with Items created from granule asset HREFs
         listed in INFILE. Only one asset HREF for each granule should be listed.
@@ -104,6 +127,9 @@ def create_hls_command(cli: Group) -> Command:
                 should point to a single HLS or L30 granule COG file. Do not
                 list multiple COG file HREFs for the same granule.
             outdir (str): Directory that will contain the collection.
+            use_raster_footprint (bool): Flag to use stactools raster_footprint
+                for the Item geometry rather than the boundary in the XML
+                metadata file.
             check_existence (bool): Flag to check that COGs exist for all
                 granule assets for each Item. Default is False.
             antimeridian_strategy (str, optional): Choice of 'normalize' or
@@ -121,7 +147,10 @@ def create_hls_command(cli: Group) -> Command:
 
         for href in hrefs:
             item = stac.create_item(
-                href, check_existence=check_existence, antimeridian_strategy=strategy
+                href,
+                use_raster_footprint=use_raster_footprint,
+                check_existence=check_existence,
+                antimeridian_strategy=strategy,
             )
             collection.add_item(item)
         collection.update_extent_from_items()

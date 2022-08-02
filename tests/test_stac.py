@@ -31,6 +31,25 @@ def test_create_s30_item() -> None:
     item.validate()
 
 
+def test_raster_footprint_geometry() -> None:
+    href = test_data.get_external_data("HLS.S30.T19LCD.2022034T145719.v2.0.B01.tif")
+    item = stac.create_item(href, use_raster_footprint=True)
+    item.validate()
+    item_dict = item.to_dict()
+    item_geometry = item_dict["geometry"]["coordinates"][0]
+    compare_geometry = [
+        [-70.8640719, -15.4571758],
+        [-70.8555162, -14.4649717],
+        [-70.0462733, -14.4699614],
+        [-70.124343, -14.8246555],
+        [-70.2669528, -15.4613947],
+        [-70.8640719, -15.4571758],
+    ]
+    for ig, cg in zip(item_geometry, compare_geometry):
+        assert ig[0] == cg[0]
+        assert ig[1] == cg[1]
+
+
 def test_parse_old_wkt() -> None:
     href = test_data.get_external_data("HLS.S30.T19LCD.2022034T145719.v2.0.B01.tif")
     test_data.get_external_data("HLS.S30.T19LCD.2022034T145719.v2.0.cmr.xml")
