@@ -1,5 +1,8 @@
 from typing import Any, Dict
 
+FOOTPRINT_DENSIFICATION_FACTOR = 10
+FOOTPRINT_SIMPLIFICATION_TOLERANCE = 0.0006  # degrees; approximately 60m
+
 CLASSIFICATION_EXTENSION_HREF = (
     "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
 )

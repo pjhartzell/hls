@@ -1,8 +1,6 @@
-import logging
 from datetime import datetime, timezone
 from typing import Any, Dict, Optional
 
-import shapely.geometry
 from pystac import Asset, Collection, Item, Link, Summaries
 from pystac.extensions.eo import EOExtension
 from pystac.extensions.item_assets import AssetDefinition, ItemAssetsExtension
@@ -10,9 +8,12 @@ from pystac.extensions.projection import ProjectionExtension
 from pystac.extensions.raster import RasterExtension
 from pystac.extensions.scientific import ScientificExtension
 from pystac.extensions.view import ViewExtension
+from shapely.geometry import MultiPolygon, shape
+from stactools.core.geometry import bounding_box
 from stactools.core.io import ReadHrefModifier
 from stactools.core.utils.antimeridian import Strategy, fix_item
 
+from stactools.hls import utils
 from stactools.hls.constants import (
     CLASSIFICATION_EXTENSION_HREF,
     INSTRUMENT,
@@ -22,14 +23,12 @@ from stactools.hls.constants import (
 )
 from stactools.hls.fragments import STACFragments
 from stactools.hls.metadata import hls_metadata
-from stactools.hls.utils import create_cog_hrefs
-
-logger = logging.getLogger(__name__)
 
 
 def create_item(
     cog_href: str,
     read_href_modifier: Optional[ReadHrefModifier] = None,
+    use_raster_footprint: bool = False,
     check_existence: bool = False,
     antimeridian_strategy: Strategy = Strategy.SPLIT,
 ) -> Item:
@@ -39,6 +38,9 @@ def create_item(
         cog_href (str): HREF to one of the EO COG files in the granule.
         read_href_modifier (ReadHrefModifier, optional): An optional
             function to modify the href (e.g. to add a token to a url)
+        use_raster_footprint (bool): Flag to use stactools raster_footprint
+            for the Item geometry rather than the boundary in the XML metadata
+            file.
         check_existence (bool, optional): Flag to check that COGs exist for all
                 granule assets. Defaults to False.
         antimeridian_strategy (Strategy, optional):Choice of 'normalize' or
@@ -52,20 +54,24 @@ def create_item(
     metadata = hls_metadata(cog_href, read_href_modifier)
     fragments = STACFragments()
 
+    id = utils.id_from_href(cog_href)
+    product = utils.product_from_href(cog_href)
+    geometry = metadata.geometry(use_raster_footprint)
+
     item = Item(
-        id=metadata.id,
-        geometry=metadata.geometry,
-        bbox=list(shapely.geometry.shape(metadata.geometry).bounds),
+        id=id,
+        geometry=geometry,
+        bbox=bounding_box(geometry),
         datetime=metadata.acquisition_datetime,
         properties={
-            "sci:doi": SCIENTIFIC[metadata.product]["doi"],
-            "hls:product": f"HLS{metadata.product}",
+            "sci:doi": SCIENTIFIC[product]["doi"],
+            "hls:product": f"HLS{product}",
         },
     )
 
-    cog_hrefs = create_cog_hrefs(
+    cog_hrefs = utils.create_cog_hrefs(
         cog_href,
-        metadata.product,
+        product,
         check_existence,
         read_href_modifier,
     )
@@ -77,7 +83,7 @@ def create_item(
         item.properties.update(**metadata.start_end_datetime)
     item.common_metadata.created = datetime.now(tz=timezone.utc)
     item.common_metadata.platform = metadata.platform
-    item.common_metadata.instruments = metadata.instrument
+    item.common_metadata.instruments = INSTRUMENT[product]
 
     eo = EOExtension.ext(item, add_if_missing=True)
     eo.cloud_cover = metadata.cloud_cover
@@ -97,12 +103,14 @@ def create_item(
     RasterExtension.add_to(item)
 
     ScientificExtension.add_to(item)
-    item.links.append(Link(**SCIENTIFIC[metadata.product]["cite-as"]))
+    item.links.append(Link(**SCIENTIFIC[product]["cite-as"]))
 
     item.stac_extensions.append(CLASSIFICATION_EXTENSION_HREF)
 
     item.stac_extensions.sort()
 
+    if isinstance(shape(item.geometry), MultiPolygon):
+        item = utils.merge_multipolygon(item)
     fix_item(item, antimeridian_strategy)
 
     return item
